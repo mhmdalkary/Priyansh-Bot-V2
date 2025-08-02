@@ -1,6 +1,5 @@
-
 module.exports.config = {
-    name: "job",
+    name: "عمل",
     version: "1.0.2",
     hasPermssion: 0,
     credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭", 
@@ -14,7 +13,7 @@ module.exports.config = {
 module.exports.languages = {
     
     "en": {
-        "cooldown": "You're done, come back later: %1 minute(s) %2 second(s)."
+        "cooldown": "لقد انتهيت، عد لاحقًا: %1 دقيقة/دقائق %2 ثانية/ثواني."
     }
 }
 module.exports.handleReply = async ({ event, api, handleReply, Currencies, getText }) => {
@@ -29,22 +28,22 @@ var coinsdd = Math.floor(Math.random() * 201) + 200; //random coins khi đào đ
 var coinsdd1 = Math.floor(Math.random() * 801) + 200; //random coins khi đào đá
 
 //random things to do
-var rdcn = ['hiring staff', 'hotel administrator', 'at the power plant', 'restaurant chef', 'worker']; //random job when working in industrial park
+var rdcn = ['توظيف موظفين', 'مشرف فندق', 'في محطة الطاقة', 'طباخ في مطعم', 'عامل']; //random job when working in industrial park
 var work1 = rdcn[Math.floor(Math.random() * rdcn.length)];   
 
-var rddv = ['plumber', 'neighbors air conditioner repair', 'multi-level sale', 'flyer distribution', 'shipper', 'computer repair', 'tour guide', 'breastfeeding' ]; //random work when working in the service area
+var rddv = ['سباك', 'تصليح مكيفات الجيران', 'بيع متعدد المستويات', 'توزيع منشورات', 'مُوصل طلبات', 'إصلاح حواسيب', 'مرشد سياحي', 'الرضاعة الطبيعية' ]; //random work when working in the service area
 var work2 = rddv[Math.floor(Math.random() * rddv.length)]; 
 
-var rdmd = ['earn 13 barrels of oil', 'earn 8 barrels of oil', 'earn 9 barrels of oil', 'earn 8 barrels of oil', 'steal the oil', 'take water and pour it into oil and sell it']; //random job while working at an oil field
+var rdmd = ['حصلت على 13 برميل نفط', 'حصلت على 8 براميل نفط', 'حصلت على 9 براميل نفط', 'حصلت على 8 براميل نفط', 'سرقة النفط', 'إضافة الماء إلى النفط وبيعه']; //random job while working at an oil field
 var work3 = rdmd[Math.floor(Math.random() * rdmd.length)]; 
 
-var rdq = ['iron ore', 'gold ore', 'coal ore', 'lead ore', 'copper ore', 'oil ore']; //random job when mining ore
+var rdq = ['خام الحديد', 'خام الذهب', 'خام الفحم', 'خام الرصاص', 'خام النحاس', 'خام النفط']; //random job when mining ore
 var work4 = rdq[Math.floor(Math.random() * rdq.length)]; 
 
-var rddd = ['diamond', 'gold', 'coal', 'emerald', 'iron', 'ordinary stone', 'lazy', 'bluestone']; //random job when digging rock
+var rddd = ['ألماس', 'ذهب', 'فحم', 'زمرد', 'حديد', 'حجر عادي', 'كسول', 'حجر أزرق']; //random job when digging rock
 var work5 = rddd[Math.floor(Math.random() * rddd.length)]; 
 
-var rddd1 = ['vip guest', 'patent', 'stranger', '23-year-old fool', 'stranger', 'patron', '92-year-old tycoon', '12-year-old boyi']; //random work when digging rock
+var rddd1 = ['ضيف VIP', 'براءة اختراع', 'غريب', 'أحمق عمره 23 عامًا', 'غريب', 'راعي', 'رجل أعمال عمره 92 عامًا', 'طفل عمره 12 عامًا']; //random work when digging rock
 var work6 = rddd1[Math.floor(Math.random() * rddd1.length)];
 
 
@@ -53,16 +52,16 @@ var msg = "";
         case "choosee": {
             
             switch(event.body) {
-                case "1": msg = `⚡️You are working ${work1} in the industrial zone and earn ${coinscn}$` ; Currencies.increaseMoney(event.senderID, coinscn); break;             
-                case "2": msg = `⚡️You are working ${work2} in the service area and earn ${coinsdv}$`; Currencies.increaseMoney(event.senderID, coinsdv); break;
-                case "3": msg = `⚡️You ${work3} at the open oil and sell ${coinsmd}$`; Currencies.increaseMoney(event.senderID, coinsmd); break;
-                case "4": msg = `⚡️You are mining ${work4} and earn ${coinsq}$`; Currencies.increaseMoney(event.senderID, coinsq); break;
-                case "5": msg = `⚡️You can dig ${work5} and earn ${coinsdd}$` ; Currencies.increaseMoney(event.senderID, coinsdd); break;
-                case "6": msg = `⚡️You choose ${work6} and given ${coinsdd1}$ if xxx 1 night, then you agree right away :)))`; Currencies.increaseMoney(event.senderID, coinsdd1); break;
-                case "7": msg = "⚡️ Coming soon..."; break; //add case if you want 
+                case "1": msg = `أنت تعمل كـ ${work1} في المنطقة الصناعية وربحت ${coinscn}$` ; Currencies.increaseMoney(event.senderID, coinscn); break;             
+                case "2": msg = `أنت تعمل كـ ${work2} في منطقة الخدمات وربحت ${coinsdv}$`; Currencies.increaseMoney(event.senderID, coinsdv); break;
+                case "3": msg = `أنت ${work3} في حقل النفط وربحت ${coinsmd}$`; Currencies.increaseMoney(event.senderID, coinsmd); break;
+                case "4": msg = `أنت تقوم بتعدين ${work4} وربحت ${coinsq}$`; Currencies.increaseMoney(event.senderID, coinsq); break;
+                case "5": msg = `أنت قمت بحفر ${work5} وربحت ${coinsdd}$` ; Currencies.increaseMoney(event.senderID, coinsdd); break;
+                case "6": msg = `أنت اخترت ${work6} وتم إعطاؤك ${coinsdd1}$ مقابل xxx ليلة واحدة، ووافقت مباشرة :)))`; Currencies.increaseMoney(event.senderID, coinsdd1); break;
+                case "7": msg = "قريباً..."; break; //add case if you want 
                 default: break;
             };
-            const choose = parseInt(event.body);
+            const choose = parseInt(event.body);            const choose = parseInt(event.body);
             if (isNaN(event.body)) return api.sendMessage("⚡️Please enter 1 con number", event.threadID, event.messageID);
             if (choose > 7 || choose < 1) return api.sendMessage("⚡️Option is not on the list.", event.threadID, event.messageID); //thay số case vào số 7
             api.unsendMessage(handleReply.messageID);
