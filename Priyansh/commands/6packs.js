@@ -139,4 +139,4 @@ const fs = global.nodemodule["fs-extra"];
      ];
      var callback = () => api.sendMessage({body:`Agar Tum Gay Nhi Ho To Ye Dekho Six Pack -.-`,attachment: fs.createReadStream(__dirname + "/cache/1.jpg")}, event.threadID, () => fs.unlinkSync(__dirname + "/cache/1.jpg"));  
       return request(encodeURI(link[Math.floor(Math.random() * link.length)])).pipe(fs.createWriteStream(__dirname+"/cache/1.jpg")).on("close",() => callback());
-   };
+   };*/
