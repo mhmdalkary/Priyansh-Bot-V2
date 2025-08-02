@@ -1,5 +1,5 @@
 module.exports.config = {
- name: "rushia",
+ name: "روسيا",
  version: "1.0.0",
  hasPermssion: 0,
  credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭",
@@ -24,7 +24,7 @@ module.exports.run = async ({ api, event }) => {
     request(res.data.url).pipe(fs.createWriteStream(__dirname + `/cache/rushia.${ext}`)).on("close", callback);
    })
       .catch(err => {
-                     api.sendMessage("there's something problem while generating photo, please try again!", event.threadID, event.messageID);
+                     api.sendMessage("حصل خطأ حاول مرة تانية!", event.threadID, event.messageID);
     api.setMessageReaction("☹️", event.messageID, (err) => {}, true);
                   })    
 }
