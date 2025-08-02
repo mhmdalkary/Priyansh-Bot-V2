@@ -1,6 +1,6 @@
 module.exports.config = {
 
-	name: "trump",
+	name: "ترامب",
 
 	version: "1.0.1",
 	hasPermssion: 0,
@@ -52,7 +52,7 @@ module.exports.run = async function({ api, event, args }) {
 	const axios = global.nodemodule["axios"];
 	let pathImg = __dirname + '/cache/trump.png';
 	var text = args.join(" ");
-	if (!text) return api.sendMessage("Enter the content of the comment on the board", threadID, messageID);
+	if (!text) return api.sendMessage("مش هخمن اللي ببالك ، اكتب شي!", threadID, messageID);
 	let getPorn = (await axios.get(`https://i.imgur.com/ZtWfHHx.png`, { responseType: 'arraybuffer' })).data;
 	fs.writeFileSync(pathImg, Buffer.from(getPorn, 'utf-8'));
 	let baseImage = await loadImage(pathImg);
