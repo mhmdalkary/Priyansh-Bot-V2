@@ -1,40 +1,38 @@
-module. exports. config = {
-    name: "autoreset",
+module.exports.config = {
+    name: "اوتريست",
     version: "1.0.1",
     hasPermssion: 0,
     credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭",
-    description: "AUTO RESTART",
-    commandCategory: "System",
+    description: "إعادة تشغيل تلقائية",
+    commandCategory: "النظام",
     cooldowns: 5
 }
-module. exports. handleEvent = async function({ api, event, args, Users,Threads }) {
-  const moment = require("moment-timezone");
-  var timeNow = moment.tz("Asia/Manila").format("HH:mm:ss");
-  var idad = global.config.ADMINBOT;    
-  console.log(timeNow)
-  var seconds = moment.tz("Asia/Manila").format("ss");
-  var timeRestart_1 = `12:00:${seconds}`
-  var timeRestart_2 = `11:00:${seconds}`
-  var timeRestart_3 = `10:00:${seconds}`
-  var timeRestart_4 = `09:00:${seconds}`
-  var timeRestart_5 = `08:00:${seconds}`
-  var timeRestart_6 = `07:00:${seconds}`
-  var timeRestart_7 = `06:00:${seconds}`
-  var timeRestart_8 = `05:00:${seconds}`
-  var timeRestart_9 = `04:00:${seconds}`
-  var timeRestart_10 = `03:00:${seconds}`
-  var timeRestart_11 = `02:00:${seconds}`
-  var timeRestart_12 = `01:00:${seconds}`
-  //console.log(timeNowRestart)
-  if ((timeNow == timeRestart_1 || timeNow == timeRestart_2 || timeNow == timeRestart_3|| timeNow == timeRestart_4|| timeNow == timeRestart_5|| timeNow == timeRestart_6 || timeNow == timeRestart_7|| timeNow == timeRestart_8|| timeNow == timeRestart_9|| timeNow== timeRestart_10|| timeNow== timeRestart_11|| timeNow == timeRestart_12) && seconds < 6 ) {
-    for( let ad of idad) {
-  setTimeout(() =>
-          api.sendMessage(`⚡️Now it's: ${timeNow}\nBaby will restart!!!`,ad, () =>process.exit(1)), 1000);
-    }
+
+module.exports.handleEvent = async function({ api, event, args, Users, Threads }) {
+    const moment = require("moment-timezone");
+    var timeNow = moment.tz("Asia/Riyadh").format("HH:mm:ss"); // توقيت السعودية
+    var idad = global.config.ADMINBOT;    
+    console.log(timeNow)
+    var seconds = moment.tz("Asia/Riyadh").format("ss");
+
+    var times = [
+        `12:00:${seconds}`, `11:00:${seconds}`, `10:00:${seconds}`,
+        `09:00:${seconds}`, `08:00:${seconds}`, `07:00:${seconds}`,
+        `06:00:${seconds}`, `05:00:${seconds}`, `04:00:${seconds}`,
+        `03:00:${seconds}`, `02:00:${seconds}`, `01:00:${seconds}`
+    ];
+
+    if (times.includes(timeNow) && seconds < 6) {
+        for (let ad of idad) {
+            setTimeout(() =>
+                api.sendMessage(`⚡️الوقت الآن: ${timeNow}\nسيتم إعادة تشغيل البوت`, ad, () => process.exit(1)), 1000
+            );
+        }
     }
 }
-module. exports. run = async  ({ api, event, args }) => {
-      const moment = require("moment-timezone");
-      var timeNow = moment.tz("Asia/Manila").format("HH:mm:ss");
-        api.sendMessage(`${timeNow}`, event.threadID)
+
+module.exports.run = async ({ api, event, args }) => {
+    const moment = require("moment-timezone");
+    var timeNow = moment.tz("Asia/Riyadh").format("HH:mm:ss"); // توقيت السعودية
+    api.sendMessage(`الوقت الآن: ${timeNow}`, event.threadID);
 }
