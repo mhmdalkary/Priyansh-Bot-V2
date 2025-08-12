@@ -1,5 +1,5 @@
 module.exports.config = {
-    name: "anifact",
+    name: "قطعة",
     version: "1.0.0",
     hasPermision: 0,
     credit: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭",
@@ -13,7 +13,7 @@ module.exports.run = async function({api, event, args, utils, Users, Threads}) {
         let axios = require('axios');
         let fs = require("fs-extra");
         let request = require("request");
-        var juswa = ['dog', 'cat', 'panda', 'fox', 'koala', 'bird', 'raccoon', 'kangaroo', 'red_panda'];
+        var juswa = ['كلب', 'قط', 'باندا', 'فوكس', 'كوالا', 'عصفور', 'راكون', 'كنغر ', 'الباندا الحمراء '];
         var juswa1 = juswa[Math.floor(Math.random() * juswa.length)];
         let {threadID, senderID, messageID} = event;
 	const res = await axios.get(`https://some-random-api.ml/animal/${juswa1}`);
