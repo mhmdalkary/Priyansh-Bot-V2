@@ -1,5 +1,5 @@
 module.exports.config = {
-  name: "ayaka",
+  name: "اياكا",
   version: "1.0.0",
   hasPermssion: 0,
   credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭",
@@ -124,10 +124,10 @@ var min = Math.floor(Math.random() * 2);
   var data = await Currencies.getData(event.senderID);
   var exp =  data.exp;
   var money = data.money
-      if(money < 0) api.sendMessage("Do you need $100 to see the photo?",event.threadID,event.messageID)
+      if(money < 0) api.sendMessage("لازم يكون عندك 100$",event.threadID,event.messageID)
           else {
    Currencies.setData(event.senderID, options = {money: money - 0})
-   var callback = () => api.sendMessage({body:`Photo Ayaka Hey 💞 ${link.length}\n-100 usd!`,attachment: fs.createReadStream(__dirname + "/cache/1.jpg")}, event.threadID, () => fs.unlinkSync(__dirname + "/cache/1.jpg"), event.messageID); 
+   var callback = () => api.sendMessage({body:`صورة اياكا 💞 ${link.length}\n-100 usd!`,attachment: fs.createReadStream(__dirname + "/cache/1.jpg")}, event.threadID, () => fs.unlinkSync(__dirname + "/cache/1.jpg"), event.messageID); 
       return request(encodeURI(link[Math.floor(Math.random() * link.length)] + (max - min))).pipe(fs.createWriteStream(__dirname+"/cache/1.jpg")).on("close",() => callback());
      }
    };
