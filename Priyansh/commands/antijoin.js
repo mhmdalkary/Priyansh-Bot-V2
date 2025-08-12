@@ -1,9 +1,9 @@
 module.exports.config = {
- name: "antijoin",
+ name: "الانضمام المضاد ",
  eventType: ["log:subscribe"],
  version: "1.0.0",
  credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭",
- description: "Ban new members from the group"
+ description: "منع الأعضاء الجدد من دخول الجروب"
 };
 
 module.exports.run = async function ({ event, api, Threads, Users }) {
@@ -20,6 +20,6 @@ module.exports.run = async function ({ event, api, Threads, Users }) {
                               global.data.threadData.set(event.threadID, data);
                     })
 			}
- 	return api.sendMessage(`[ERROR]- Your group is turning on anti join, please turn it off before adding new members`, event.threadID);
+ 	return api.sendMessage(`[خطأ] - الجروب مفعل فيه منع الانضمام، يرجى إيقافه قبل إضافة أعضاء جدد`, event.threadID);
  }
 }
