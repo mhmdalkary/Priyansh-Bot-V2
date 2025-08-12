@@ -32,11 +32,11 @@ module.exports.run = async function({ api,event,args,client,Users,Threads,__GLOB
 
 ➤ اسم البوت: 『 ${global.config.BOTNAME} 』
 
-➤ صاحب البوت: 『 Priyansh Rajput 』
+➤ صاحب البوت: 『 حمادي-محمد』
 
-➤ رابط فيسبوك الأدمن: 『 www.facebook.com/priyanshu.rajput.official 』
+➤ رابط فيسبوك الأدمن: 『 www.facebook.com/100087632392287 』
 
-➤ للتواصل عبر تليجرام: 『 @Priyanshrajput 』
+➤ للتواصل عبر إنستجرام: 『 @it0c_ 』
 
 •••••••••••••••••••••••••••••••••
 
