@@ -1,13 +1,14 @@
 module.exports.config = {
-  name: "award",
+  name: "جائزة",
   version: "3.1.1",
   hasPermssion: 0,
   credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭",
-  description: "Award for your self <3",
-  commandCategory: "Edit-IMG",
-  usages: "[ name ] | [ text ]",
+  description: "جائزة لنفسك <3",
+  commandCategory: "edit-img",
+  usages: "[ الاسم ] | [ النص ]",
   cooldowns: 10
 };
+
 module.exports.wrapText = (ctx, text, maxWidth) => {
   return new Promise((resolve) => {
     if (ctx.measureText(text).width < maxWidth) return resolve([text]);
@@ -53,26 +54,29 @@ module.exports.run = async function ({ api, event, args, Users }) {
     })
   ).data;
   fs.writeFileSync(pathImg, Buffer.from(getImage, "utf-8"));
-if(!fs.existsSync(__dirname+'/cache/SVN-Arial 2.ttf')) { 
-      let getfont = (await axios.get(`https://drive.google.com/u/0/uc?id=11YxymRp0y3Jle5cFBmLzwU89XNqHIZux&export=download`, { responseType: "arraybuffer" })).data;
-       fs.writeFileSync(__dirname+"/cache/SVN-Arial 2.ttf", Buffer.from(getfont, "utf-8"));
-    };
+  
+  if(!fs.existsSync(__dirname+'/cache/SVN-Arial 2.ttf')) { 
+    let getfont = (await axios.get(`https://drive.google.com/u/0/uc?id=11YxymRp0y3Jle5cFBmLzwU89XNqHIZux&export=download`, { responseType: "arraybuffer" })).data;
+    fs.writeFileSync(__dirname+"/cache/SVN-Arial 2.ttf", Buffer.from(getfont, "utf-8"));
+  };
+  
   let baseImage = await loadImage(pathImg);
   let canvas = createCanvas(baseImage.width, baseImage.height);
   let ctx = canvas.getContext("2d");
   ctx.drawImage(baseImage, 0, 0, canvas.width, canvas.height);
   Canvas.registerFont(__dirname+`/cache/SVN-Arial 2.ttf`, {
-        family: "SVN-Arial 2"
-    });
+    family: "SVN-Arial 2"
+  });
   ctx.font = "30px SVN-Arial 2";
   ctx.fillStyle = "black";
   ctx.textAlign = "center";
   
   const line = await this.wrapText(ctx, text[0], 464);
   const lines = await this.wrapText(ctx, text[1], 464);
-  ctx.fillText(line.join("\n"), 325, 250)
-  ctx.fillText(lines.join("\n"), 325, 280)
+  ctx.fillText(line.join("\n"), 325, 250);
+  ctx.fillText(lines.join("\n"), 325, 280);
   ctx.beginPath();
+  
   const imageBuffer = canvas.toBuffer();
   fs.writeFileSync(pathImg, imageBuffer);
   return api.sendMessage(
