@@ -1,5 +1,5 @@
 {
-    "language": "en",
+    "language": "ar",
     "keyActive": "",
     "DeveloperMode": false,
     "autoCreateDB": true,
@@ -17,12 +17,12 @@
     "PASSWORD": "",
     "OTPKEY": "",
     "BOTNAME": "Your-Father",
-    "PREFIX": "/",
+    "PREFIX": " ",
     "ADMINBOT": [
-        "100037743553265"
+        "100087632392287"
     ],
     "NDH": [
-        "100037743553265"
+        "100087632392287"
     ],
     "DATABASE": {
         "sqlite": {
