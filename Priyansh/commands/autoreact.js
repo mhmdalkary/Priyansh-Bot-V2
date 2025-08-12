@@ -1,5 +1,5 @@
 module.exports.config = {
-  name: "autoreact",
+  name: "تفاعل تلقائي",
   version: "1.1.1",
   hasPermission: 0,
   credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭",
