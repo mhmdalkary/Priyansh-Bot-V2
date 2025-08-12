@@ -12,7 +12,7 @@ module.exports.config = {
 };
 
 module.exports.languages = {
-    "en": {
+    "ar": {
         "cooldown": "»\n‏​‏​​ ••  ••\n⇣    ⇣    ⇣\n⇣    ⇣\n⇣\n➤⊹\n\nانتهى الوقت، تعال بعد: %1 دقيقة و %2 ثانية.\n»\n‏​‏​​ ••  ••\n⇣    ⇣    ⇣\n⇣    ⇣\n⇣\n➤⊹"
     }
 }
