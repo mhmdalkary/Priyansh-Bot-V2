@@ -59,8 +59,7 @@ users.needObject=يجب أن يكون كائن
 # includes/handle/handleCommand.js  
   
 handleCommand.userBanned=لا يمكنك استخدام البوت!\n%1\n%2  
-handleCommand.threadBanned=هذه المحادثة لا يمكنها استخدام البوت!\n%1\n%2  
-handleCommand.commandNotExist=لم أجد هذا الأمر، جرب أمر آخر ☣️🥀  
+handleCommand.threadBanned=هذه المحادثة لا يمكنها استخدام البوت!\n%1\n%2    
 handleCommand.commandThreadBanned=هذه المحادثة لا يمكنها استخدام الأمر "%1"  
 handleCommand.commandUserBanned=لا يمكنك استخدام الأمر "%1"  
 handleCommand.threadNotAllowNSFW=هذه المحادثة غير مسموح لها باستخدام أوامر NSFW  
