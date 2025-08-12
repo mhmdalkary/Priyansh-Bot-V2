@@ -37,14 +37,14 @@ module.exports.run = async function({ api, event, Threads }) {
         
         return api.sendMessage(
             { 
-                body: `✿❀ ──────────── ✿❀
+                body: `✿❀ ─────────── ✿❀
 ➤⊹ البوت متصل الآن
 ➤⊹ المجموعة: ${groupName}
 ➤⊹ التاريخ: ${dateOnly}
-✧ ✦ ──────────── ✧ ✦
+✧ ✦ ─────────── ✧ ✦
 مرحباً بالجميع، أنا ${global.config.BOTNAME || "البوت"}.
 ★☆ لعرض قائمة الأوامر اكتب: ${global.config.PREFIX}اوامر
-✿❀ ──────────── ✿❀`,
+✿❀ ─────────── ✿❀`,
                 attachment: fs.createReadStream(__dirname + "/cache/botjoin.mp4") 
             }, 
             threadID
@@ -72,15 +72,15 @@ module.exports.run = async function({ api, event, Threads }) {
             const dateNow = moment.tz("Asia/Kolkata").format("DD/MM/YYYY");
             
             (typeof threadData.customJoin == "undefined") 
-                ? msg = `✿❀ ──────────── ✿❀
+                ? msg = `✿❀ ─────────── ✿❀
 ➤⊹ مرحباً ${nameArray.join(', ')}
 ➤⊹ أنت العضو رقم ${memLength.join(', ')}
 ➤⊹ المجموعة: ${groupName}
 ➤⊹ التاريخ: ${dateNow}
-✧ ✦ ──────────── ✧ ✦
+✧ ✦ ────────── ✧ ✦
 سعداء بانضمامك إلينا، نتمنى لك وقتاً ممتعاً.
 ★☆ تواصل وتعرف على الأعضاء وشاركنا النقاش.
-✿❀ ──────────── ✿❀`
+✿❀ ─────────── ✿❀`
                 : msg = threadData.customJoin;
  
             if (existsSync(path)) mkdirSync(path, { recursive: true });
