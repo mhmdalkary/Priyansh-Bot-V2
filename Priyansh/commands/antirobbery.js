@@ -21,5 +21,5 @@ module.exports.run = async ({ api, event, Threads }) => {
     await Threads.setData(event.threadID, { data });
     global.data.threadData.set(parseInt(event.threadID), data);
 
-    return api.sendMessage(`✅ تم ${(data["guard"] == true) ? "تفعيل" : "إيقاف"} حماية المشرفين بنجاح`, event.threadID, event.messageID);
+    return api.sendMessage(`✅ تم ${(data["guard"] == true) ? "تفعيل" : "ايقاف"} حماية المشرفين بنجاح`, event.threadID, event.messageID);
 };
