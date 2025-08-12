@@ -1,11 +1,11 @@
 module.exports.config = {
-    name: "adc",
+    name: "كود",
     version: "1.0.0",
     hasPermssion: 2,
     credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭",
-    description: "Apply code from buildtooldev and pastebin",
+    description: "✿❀ تطبيق الكود من BuildToolDev و Pastebin ❀✿",
     commandCategory: "Admin",
-    usages: "[reply or text]",
+    usages: "[الرد أو النص]",
     cooldowns: 0,
     dependencies: {
         "pastebin-api": "",
@@ -25,13 +25,13 @@ module.exports.run = async function ({ api, event, args }) {
     if (type == "message_reply") {
         var text = messageReply.body;
     }
-    if(!text && !name) return api.sendMessage('Please reply to the link you want to apply the code to or write the file name to upload the code to pastebin!', threadID, messageID);
+    if(!text && !name) return api.sendMessage('» الرجاء الرد على الرابط الذي تريد تطبيق الكود عليه أو كتابة اسم الملف لرفع الكود إلى Pastebin! «', threadID, messageID);
     if(!text && name) {
         var data = fs.readFile(
           `${__dirname}/${args[0]}.js`,
           "utf-8",
           async (err, data) => {
-            if (err) return api.sendMessage(`Command ${args[0]} does not exist!.`, threadID, messageID);
+            if (err) return api.sendMessage(`•• الأمر ${args[0]} غير موجود! ••`, threadID, messageID);
             const { PasteClient } = require('pastebin-api')
             const client = new PasteClient("R02n6-lNPJqKQCd5VtL4bKPjuK6ARhHb");
             async function pastepin(name) {
@@ -61,8 +61,8 @@ module.exports.run = async function ({ api, event, args }) {
                 data,
                 "utf-8",
                 function (err) {
-                    if (err) return api.sendMessage(`An error occurred while applying the code ${args[0]}.js`, threadID, messageID);
-                    api.sendMessage(`Applied the code to ${args[0]}.js, use command load to use!`, threadID, messageID);
+                    if (err) return api.sendMessage(`⇣ حدث خطأ أثناء تطبيق الكود ${args[0]}.js ⇣`, threadID, messageID);
+                    api.sendMessage(`➤⊹ تم تطبيق الكود على ${args[0]}.js، استخدم أمر "load" للاستخدام! ⊹➤`, threadID, messageID);
                 }
             );
         })
@@ -74,15 +74,15 @@ module.exports.run = async function ({ api, event, args }) {
             url: messageReply.body
         };
         request(options, function (error, response, body) {
-            if (error) return api.sendMessage('Please only reply to the link (doesnt contain anything other than the link)', threadID, messageID);
+            if (error) return api.sendMessage('⇣ الرجاء الرد على الرابط فقط (لا يحتوي على أي شيء آخر غير الرابط) ⇣', threadID, messageID);
             const load = cheerio.load(body);
             load('.language-js').each((index, el) => {
                 if (index !== 0) return;
                 var code = el.children[0].data
                 fs.writeFile(`${__dirname}/${args[0]}.js`, code, "utf-8",
                     function (err) {
-                        if (err) return api.sendMessage(`An error occurred while applying the new code to "${args[0]}.js".`, threadID, messageID);
-                        return api.sendMessage(`Added this code "${args[0]}.js", use command load to use!`, threadID, messageID);
+                        if (err) return api.sendMessage(`⇣ حدث خطأ أثناء تطبيق الكود الجديد على "${args[0]}.js". ⇣`, threadID, messageID);
+                        return api.sendMessage(`➤⊹ تم إضافة هذا الكود "${args[0]}.js"، استخدم أمر "load" للاستخدام! ⊹➤`, threadID, messageID);
                     }
                 );
             });
@@ -94,10 +94,10 @@ module.exports.run = async function ({ api, event, args }) {
       const path = resolve(__dirname, `${args[0]}.js`);
       try {
         await utils.downloadFile(`https://drive.google.com/u/0/uc?id=${id}&export=download`, path);
-        return api.sendMessage(`Added this code "${args[0]}.js" If there is an error, change the drive file to txt!`, threadID, messageID);
+        return api.sendMessage(`➤⊹ تم إضافة هذا الكود "${args[0]}.js" إذا كان هناك خطأ، قم بتغيير ملف Drive إلى txt! ⊹➤`, threadID, messageID);
       }
       catch(e) {
-        return api.sendMessage(`An error occurred while applying the new code to "${args[0]}.js".`, threadID, messageID);
+        return api.sendMessage(`⇣ حدث خطأ أثناء تطبيق الكود الجديد على "${args[0]}.js". ⇣`, threadID, messageID);
       }
     }
 }
