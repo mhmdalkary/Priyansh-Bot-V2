@@ -43,9 +43,9 @@ module.exports.run = async function({ api, event, Threads }) {
 ➤⊹ التاريخ: ${dateOnly}
 ✧ ✦ ─────────── ✧ ✦
 مرحباً بالجميع، أنا ${global.config.BOTNAME || "البوت"}.
-★☆ لعرض قائمة الأوامر اكتب: ${global.config.PREFIX}اوامر
+★☆ لعرض قائمة الأوامر اكتب: ${global.config.PREFIX}2اوامر
 ✿❀ ─────────── ✿❀`,
-                attachment: fs.createReadStream(__dirname + "/cache/botjoin.mp4") 
+                attachment: fs.createReadStream(__dirname + "/cache/0648ed427d043e689a63b8e0328385a5.mp4") 
             }, 
             threadID
         );
