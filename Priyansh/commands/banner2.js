@@ -1,5 +1,5 @@
 module.exports.config = {
-  name: "banner2",
+  name: "بنر2",
   version: "1.0.0",
   hasPermssion: 0,
   credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭",
@@ -39,7 +39,7 @@ module.exports.run = async function({ api, args, event, permssion }) {
       return api.sendMessage(msg, event.threadID,event.messageID);
   } else {
      };
-   return api.sendMessage("Reply This Message To Select Char", event.threadID, (err, info) => {
+   return api.sendMessage("الرد على هذه الرسالة لتحديد الشخصية ", event.threadID, (err, info) => {
     return global.client.handleReply.push({
       step: 1,
       name: this.config.name,
@@ -74,7 +74,7 @@ module.exports.handleReply = async function({ api, event, args, handleReply, cli
     }
     if(handleReply.step == 1){
       api.unsendMessage(handleReply.messageID);
-      return api.sendMessage(`You have chosen a char whose sequence number is ${event.body}, reply to this message to enter your name`, event.threadID, (err, info) => {
+      return api.sendMessage(`لقد اخترت شخصية يكون رقم تسلسلها هو  ${event.body}, قم بالرد على هذه الرسالة لإدخال اسمك `, event.threadID, (err, info) => {
     return global.client.handleReply.push({
       step: 2,
       name: this.config.name,
@@ -85,7 +85,7 @@ module.exports.handleReply = async function({ api, event, args, handleReply, cli
   }, event.messageID);
     } else if(handleReply.step == 2){
       api.unsendMessage(handleReply.messageID);
-      return api.sendMessage(`You have chosen ${event.body} as your name, reply to this message to enter the color you want`, event.threadID, (err, info) => {
+      return api.sendMessage(`لقد اخترت  ${event.body} مثل اسمك، قم بالرد على هذه الرسالة لإدخال اللون الذي تريده `, event.threadID, (err, info) => {
     return global.client.handleReply.push({
       step: 3,
       name: this.config.name,
