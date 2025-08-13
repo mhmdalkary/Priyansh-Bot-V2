@@ -20,19 +20,19 @@ module.exports.handleReply = async function ({ api, event, args, Threads, handle
   switch (handleReply.type) {
     case "reply":
       {
-        if (arg[0] == "ban" || arg[0] == "حظر") {
+        if (arg[0] == "ban" || arg[0] == "Ban") {
           const data = (await Threads.getData(idgr)).data || {};
           data.banned = 1;
           data.dateAdded = time;
           await Threads.setData(idgr, { data });
           global.data.threadBanned.set(idgr, { dateAdded: data.dateAdded });
-          return api.sendMessage(`»إشعارات من المالك HMADY«\n\n تم حظر مجموعة الأصدقاء من استخدام البوت بسبب الحظر.`, idgr, () =>
+          return api.sendMessage(`»إشعارات من المالك 𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭«\n\n تم حظر مجموعة الأصدقاء من استخدام البوت بسبب الحظر.`, idgr, () =>
             api.sendMessage(`${api.getCurrentUserID()}`, () =>
               api.sendMessage(`تم الحظر بنجاح\n\n${groupName} \nمعرف المجموعة:${idgr}`, threadID, () =>
                 api.unsendMessage(handleReply.messageID))));
         }
 
-        if (arg[0] == "unban" || arg[0] == "Unban" || arg[0] == "ub" || arg[0] == "فك") {
+        if (arg[0] == "unban" || arg[0] == "Unban" || arg[0] == "ub" || arg[0] == "Ub") {
           const data = (await Threads.getData(idgr)).data || {};
           data.banned = 0;
           data.dateAdded = null;
@@ -44,7 +44,7 @@ module.exports.handleReply = async function ({ api, event, args, Threads, handle
                 api.unsendMessage(handleReply.messageID))));
         }
 
-        if (arg[0] == "del" || arg[0] == "حذف") {
+        if (arg[0] == "del" || arg[0] == "Del") {
           const data = (await Threads.getData(idgr)).data || {};
           await Threads.delData(idgr, { data });
           console.log(groupName)
@@ -52,7 +52,7 @@ module.exports.handleReply = async function ({ api, event, args, Threads, handle
           break;
         }
 
-        if (arg[0] == "out" || arg[0] == "غادري") {
+        if (arg[0] == "out" || arg[0] == "Out") {
           api.sendMessage(`»إشعارات من المالك 𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭«\n\n تم الحذف من مجموعة الدردشة`, idgr, () =>
             api.sendMessage(`${api.getCurrentUserID()}`, () =>
               api.sendMessage(`تم الخروج بنجاح\n\n${groupName} \nمعرف المجموعة:${idgr} `, threadID, () =>
@@ -103,7 +103,7 @@ module.exports.run = async function ({ api, event, args }) {
         }
         msg += `--صفحة ${page}/${numPage}--\nاستخدم ${global.config.PREFIX}allbox رقم الصفحة/الكل\n\n`
 
-        api.sendMessage(msg + 'رد على out, ban, unban, del[data] رقم الطلب للخروج, الحظر, إلغاء الحظر, أو حذف[البيانات] لهذه المحادثة!', event.threadID, (e, data) =>
+        api.sendMessage(msg + 'رد على Out, Ban, Unban, Del[data] رقم الطلب للخروج, الحظر, إلغاء الحظر, أو حذف[البيانات] لهذه المحادثة!', event.threadID, (e, data) =>
           global.client.handleReply.push({
             name: this.config.name,
             author: event.senderID,
