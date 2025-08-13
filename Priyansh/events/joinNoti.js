@@ -1,7 +1,7 @@
 module.exports.config = {
     name: "joinNoti",
     eventType: ["log:subscribe"],
-    version: "1.0.1",
+    version: "1.0.2",
     credits: "Priyansh Rajput (تعديل: محمد)",
     description: "إشعار بانضمام شخص جديد أو البوت للمجموعة مع صورة/فيديو/GIF عشوائي",
     dependencies: {
@@ -10,31 +10,36 @@ module.exports.config = {
         "pidusage": ""
     }
 };
- 
+
 module.exports.onLoad = function () {
     const { existsSync, mkdirSync } = global.nodemodule["fs-extra"];
     const { join } = global.nodemodule["path"];
- 
-    const path = join(__dirname, "cache", "joinvideo");
-    if (existsSync(path)) mkdirSync(path, { recursive: true }); 
- 
-    const path2 = join(__dirname, "cache", "joinvideo", "randomgif");
-    if (!existsSync(path2)) mkdirSync(path2, { recursive: true });
- 
+
+    const pathVideo = join(__dirname, "cache", "joinvideo");
+    if (!existsSync(pathVideo)) mkdirSync(pathVideo, { recursive: true }); 
+
+    const pathGif = join(__dirname, "cache", "joinvideo", "randomgif");
+    if (!existsSync(pathGif)) mkdirSync(pathGif, { recursive: true });
+
     return;
 }
- 
+
 module.exports.run = async function({ api, event, Threads }) {
     const { join } = global.nodemodule["path"];
     const { threadID } = event;
     const moment = require("moment-timezone");
     const dateOnly = moment.tz("Asia/Kolkata").format("DD/MM/YYYY");
+    const fs = require("fs-extra");
 
+    // لو البوت هو اللي انضم
     if (event.logMessageData.addedParticipants.some(i => i.userFbId == api.getCurrentUserID())) {
-        const fs = require("fs");
         const threadData = await Threads.getData(threadID);
         const groupName = threadData.threadInfo.threadName || "المجموعة";
-        
+
+        let attachment = [];
+        let videoPath = join(__dirname, "cache", "0648ed427d043e689a63b8e0328385a5.mp4");
+        if (fs.existsSync(videoPath)) attachment.push(fs.createReadStream(videoPath));
+
         return api.sendMessage(
             { 
                 body: `✿❀ ─────────── ✿❀
@@ -45,34 +50,37 @@ module.exports.run = async function({ api, event, Threads }) {
 مرحباً بالجميع، أنا ${global.config.BOTNAME || "البوت"}.
 ★☆ لعرض قائمة الأوامر اكتب: ${global.config.PREFIX}2اوامر
 ✿❀ ─────────── ✿❀`,
-                attachment: fs.createReadStream(__dirname + "/cache/0648ed427d043e689a63b8e0328385a5.mp4") 
+                attachment 
             }, 
             threadID
         );
-    } else {
+    } 
+    // لو عضو جديد هو اللي انضم
+    else {
         try {
-            const { createReadStream, existsSync, mkdirSync, readdirSync } = global.nodemodule["fs-extra"];
+            const { createReadStream, existsSync, mkdirSync, readdirSync } = fs;
             let { threadName, participantIDs } = await api.getThreadInfo(threadID);
- 
+
             const threadData = global.data.threadData.get(parseInt(threadID)) || {};
             const groupName = threadName || "المجموعة";
-            const path = join(__dirname, "cache", "joinvideo");
-            const pathGif = join(path, `${threadID}.video`);
- 
+            const pathVideo = join(__dirname, "cache", "joinvideo");
+            const pathGif = join(pathVideo, `${threadID}.video`);
+
+            if (!existsSync(pathVideo)) mkdirSync(pathVideo, { recursive: true });
+
             var mentions = [], nameArray = [], memLength = [], i = 0;
-            
-            for (let id in event.logMessageData.addedParticipants) {
-                const userName = event.logMessageData.addedParticipants[id].fullName;
-                nameArray.push(userName);
-                mentions.push({ tag: userName, id });
+
+            for (let user of event.logMessageData.addedParticipants) {
+                nameArray.push(user.fullName);
+                mentions.push({ tag: user.fullName, id: user.userFbId });
                 memLength.push(participantIDs.length - i++);
             }
             memLength.sort((a, b) => a - b);
 
             const dateNow = moment.tz("Asia/Kolkata").format("DD/MM/YYYY");
-            
-            (typeof threadData.customJoin == "undefined") 
-                ? msg = `✿❀ ─────────── ✿❀
+
+            let msg = (typeof threadData.customJoin == "undefined") 
+                ? `✿❀ ─────────── ✿❀
 ➤⊹ مرحباً ${nameArray.join(', ')}
 ➤⊹ أنت العضو رقم ${memLength.join(', ')}
 ➤⊹ المجموعة: ${groupName}
@@ -81,22 +89,29 @@ module.exports.run = async function({ api, event, Threads }) {
 سعداء بانضمامك إلينا، نتمنى لك وقتاً ممتعاً.
 ★☆ تواصل وتعرف على الأعضاء وشاركنا النقاش.
 ✿❀ ─────────── ✿❀`
-                : msg = threadData.customJoin;
- 
-            if (existsSync(path)) mkdirSync(path, { recursive: true });
- 
-            const randomPath = readdirSync(join(__dirname, "cache", "joinGif", "randomgif"));
- 
-            if (existsSync(pathGif)) formPush = { body: msg, attachment: createReadStream(pathGif), mentions }
-            else if (randomPath.length != 0) {
-                const pathRandom = join(__dirname, "cache", "joinGif", "randomgif", `${randomPath[Math.floor(Math.random() * randomPath.length)]}`);
-                formPush = { body: msg, attachment: createReadStream(pathRandom), mentions }
+                : threadData.customJoin;
+
+            let formPush = { body: msg, mentions };
+
+            // أولوية للفيديو الخاص بالقروب
+            if (existsSync(pathGif)) {
+                formPush.attachment = createReadStream(pathGif);
+            } 
+            // بعدها ملفات الجيف العشوائية
+            else {
+                const randomFolder = join(__dirname, "cache", "joinvideo", "randomgif");
+                if (existsSync(randomFolder)) {
+                    const randomFiles = readdirSync(randomFolder);
+                    if (randomFiles.length > 0) {
+                        const randomFile = randomFiles[Math.floor(Math.random() * randomFiles.length)];
+                        formPush.attachment = createReadStream(join(randomFolder, randomFile));
+                    }
+                }
             }
-            else formPush = { body: msg, mentions }
- 
+
             return api.sendMessage(formPush, threadID);
         } catch (e) { 
-            return console.log(e) 
-        };
+            console.log(e);
+        }
     }
 }
