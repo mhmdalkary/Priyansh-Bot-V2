@@ -1,93 +1,122 @@
 module.exports.config = {
-	name: "بنر",
-	version: "1.0.2",
-	hasPermssion: 0,
-	credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭",
-	description: "generates banner with lots of characters available",
-  commandCategory: "game",
-	usages: "{number}|{name1}|{name2}|{name3}|{color}",
-    cooldowns: 5
+  name: "بنر",
+  version: "1.1.0",
+  hasPermssion: 0,
+  credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭 (تعديل وتحسين: محمد)",
+  description: "يولد صورة بنر فيها شخصيات وخيارات كثيرة",
+  commandCategory: "العاب",
+  usages: "{رقم}|{كلمة1}|{كلمة2}|{كلمة3}|{لون}",
+  cooldowns: 5
 };
-module.exports.run = async ({ api, event,args }) =>  {
-  const text1 = args.join(" ").trim().replace(/\s+/g, " ").replace(/(\s+\|)/g, "|").replace(/\|\s+/g, "|").split("|")[0] || "21";
-  const text2 = args.join(" ").trim().replace(/\s+/g, " ").replace(/(\s+\|)/g, "|").replace(/\|\s+/g, "|").split("|")[1] || "";
-  const text3 = args.join(" ").trim().replace(/\s+/g, " ").replace(/(\s+\|)/g, "|").replace(/\|\s+/g, "|").split("|")[2] || "";
-  const text4 = args.join(" ").trim().replace(/\s+/g, " ").replace(/(\s+\|)/g, "|").replace(/\|\s+/g, "|").split("|")[3] || "";
-  const color = args.join(" ").trim().replace(/\s+/g, " ").replace(/(\s+\|)/g, "|").replace(/\|\s+/g, "|").split("|")[4] || "";
-  
-    const { loadImage, createCanvas } = require("canvas");
-    const fs = require('fs')
-    const request = require('request');
-    const path = require('path');
-    const axios = require('axios');
-    const lengthchar = (await axios.get('https://run.mocky.io/v3/0dcc2ccb-b5bd-45e7-ab57-5dbf9db17864')).data
-    const Canvas = require('canvas');
-    let pathImg = __dirname + `/tad/avatar_1.png`;
-    let pathAva = __dirname + `/tad/avatar_2.png`;
-    let avtAnime = (
-      await axios.get(encodeURI(`${lengthchar[text1 - 1].imgAnime}`), { responseType: "arraybuffer" })).data;
-    fs.writeFileSync(pathAva, Buffer.from(avtAnime, "utf-8"));
-    let background = (await axios.get(encodeURI(`https://imgur.com/Ch778s2.png`), { responseType: "arraybuffer" })).data;
-    fs.writeFileSync(pathImg, Buffer.from(background, "utf-8"));
-     if (!fs.existsSync(__dirname +
-      `/tad/PastiOblique-7B0wK.otf`)) {
-      let getfon2t = (await axios.get(`https://github.com/hanakuUwU/font/raw/main/PastiOblique-7B0wK.otf`, { responseType: "arraybuffer" })).data;
-      fs.writeFileSync(__dirname + `/tad/PastiOblique-7B0wK.otf`, Buffer.from(getfon2t, "utf-8"));
-    };
-         if (!fs.existsSync(__dirname +
-      `/tad/gantellinesignature-bw11b.ttf`)) {
-      let getfon3t = (await axios.get(`https://github.com/hanakuUwU/font/raw/main/gantellinesignature-bw11b.ttf`, { responseType: "arraybuffer" })).data;
-      fs.writeFileSync(__dirname + `/tad/gantellinesignature-bw11b.ttf`, Buffer.from(getfon3t, "utf-8"));
-    };
-        if (!fs.existsSync(__dirname +
-      `/tad/UTM%20Bebas.ttf`)) {
-      let getfon3t2 = (await axios.get(`https://github.com/hanakuUwU/font/blob/main/UTM%20Bebas.ttf?raw=true`, { responseType: "arraybuffer" })).data;
-      fs.writeFileSync(__dirname + `/tad/UTM%20Bebas.ttf`, Buffer.from(getfon3t2, "utf-8"));
-    };
-    if(color == "no" || color == "No" || color == ""){
-     color_ = lengthchar[text1 - 1].colorBg
-    } else {
-      color_ = color
+
+module.exports.run = async ({ api, event, args }) => {
+  const fs = require("fs");
+  const path = require("path");
+  const axios = require("axios");
+  const { loadImage, createCanvas, registerFont } = require("canvas");
+
+  try {
+    // إنشاء مجلد tad لو مش موجود
+    const tadFolder = path.join(__dirname, "tad");
+    if (!fs.existsSync(tadFolder)) fs.mkdirSync(tadFolder);
+
+    // تقسيم المدخلات
+    const [رقم, كلمة1, كلمة2, كلمة3, اللون] =
+      args.join(" ").trim().replace(/\s+/g, " ").split("|").map(x => x?.trim() || "");
+
+    const index = parseInt(رقم) || 1;
+
+    // جلب قائمة الشخصيات
+    let قائمة_الشخصيات;
+    try {
+      const res = await axios.get("https://run.mocky.io/v3/0dcc2ccb-b5bd-45e7-ab57-5dbf9db17864");
+      قائمة_الشخصيات = res.data;
+    } catch {
+      return api.sendMessage("❌ فشل تحميل بيانات الشخصيات، جرب لاحقاً", event.threadID, event.messageID);
     }
-    let a = await loadImage(pathImg);
-    let ab = await loadImage(pathAva);
-    let canvas = createCanvas(a.width, a.height);
-    let ctx = canvas.getContext("2d");
-     ctx.fillStyle = "#e6b030";
-    ctx.drawImage(a, 0, 0, canvas.width, canvas.height);
-     ctx.drawImage(ab, 1500, -400, 1980, 1980);
-     ctx.textAlign = "start";
-  Canvas.registerFont(__dirname + `/tad/PastiOblique-7B0wK.otf`, {
-    family: "PastiOblique-7B0wK"
-  });
-    ctx.fillStyle = color_ 
-    ctx.font = "370px PastiOblique-7B0wK";
-    ctx.fillText(text2, 500, 750);
-    ctx.textAlign = "start";
-  Canvas.registerFont(__dirname + `/tad/gantellinesignature-bw11b.ttf`, {
-    family: "gantellinesignature-bw11b"
-  });
-    ctx.fillStyle = "#fff"
-    ctx.font = "350px gantellinesignature-bw11b";
-    ctx.fillText(text3, 500, 680);
-    ctx.save();
-     Canvas.registerFont(__dirname + `/tad/UTM%20Bebas.ttf`, {
-    family: "Bebas"
-  });
-    ctx.textAlign = "end";
-    ctx.fillStyle = "#f56236"
-    ctx.font = "145px PastiOblique-7B0wK";
-    ctx.fillText(text4, 2100, 870);
-    ctx.beginPath();
-    const imageBuffer = canvas.toBuffer();
-     fs.writeFileSync(pathImg, imageBuffer);
-  return api.sendMessage({
-    body: `Here's Your Photo`,
-    attachment: fs.createReadStream(pathImg)
-  },
-    event.threadID,
-    () => fs.unlinkSync(pathImg),
-    fs.unlinkSync(pathAva),
-    event.messageID
-  );
- }
+
+    if (!قائمة_الشخصيات[index - 1]) {
+      return api.sendMessage("⚠ الرقم اللي اخترته مش موجود في القائمة", event.threadID, event.messageID);
+    }
+
+    // تحميل صورة الشخصية
+    const pathChar = path.join(tadFolder, "char.png");
+    try {
+      const img = await axios.get(قائمة_الشخصيات[index - 1].imgAnime, { responseType: "arraybuffer" });
+      fs.writeFileSync(pathChar, img.data);
+    } catch {
+      return api.sendMessage("❌ فشل تحميل صورة الشخصية", event.threadID, event.messageID);
+    }
+
+    // تحميل الخلفية
+    const pathBg = path.join(tadFolder, "bg.png");
+    try {
+      const bg = await axios.get("https://i.imgur.com/Ch778s2.png", { responseType: "arraybuffer" });
+      fs.writeFileSync(pathBg, bg.data);
+    } catch {
+      return api.sendMessage("❌ فشل تحميل الخلفية", event.threadID, event.messageID);
+    }
+
+    // تحميل الخطوط إذا ناقصة
+    const fonts = [
+      { file: "PastiOblique.otf", url: "https://github.com/hanakuUwU/font/raw/main/PastiOblique-7B0wK.otf" },
+      { file: "gantelline.ttf", url: "https://github.com/hanakuUwU/font/raw/main/gantellinesignature-bw11b.ttf" },
+      { file: "bebas.ttf", url: "https://github.com/hanakuUwU/font/blob/main/UTM%20Bebas.ttf?raw=true" }
+    ];
+    for (let font of fonts) {
+      const fontPath = path.join(tadFolder, font.file);
+      if (!fs.existsSync(fontPath)) {
+        try {
+          const f = await axios.get(font.url, { responseType: "arraybuffer" });
+          fs.writeFileSync(fontPath, f.data);
+        } catch {
+          return api.sendMessage(`❌ فشل تحميل الخط ${font.file}`, event.threadID, event.messageID);
+        }
+      }
+    }
+
+    // اختيار اللون
+    let لون_خلفية = (!اللون || اللون.toLowerCase() === "no") ? قائمة_الشخصيات[index - 1].colorBg : اللون;
+
+    // الرسم
+    const خلفية = await loadImage(pathBg);
+    const شخصية = await loadImage(pathChar);
+    const canvas = createCanvas(خلفية.width, خلفية.height);
+    const ctx = canvas.getContext("2d");
+
+    ctx.drawImage(خلفية, 0, 0, canvas.width, canvas.height);
+    ctx.drawImage(شخصية, 1500, -400, 1980, 1980);
+
+    registerFont(path.join(tadFolder, "PastiOblique.otf"), { family: "Pasti" });
+    ctx.fillStyle = لون_خلفية;
+    ctx.font = "370px Pasti";
+    ctx.fillText(كلمة1 || "", 500, 750);
+
+    registerFont(path.join(tadFolder, "gantelline.ttf"), { family: "Gantelline" });
+    ctx.fillStyle = "#fff";
+    ctx.font = "350px Gantelline";
+    ctx.fillText(كلمة2 || "", 500, 680);
+
+    ctx.fillStyle = "#f56236";
+    ctx.font = "145px Pasti";
+    ctx.fillText(كلمة3 || "", 2100, 870);
+
+    const outputPath = path.join(tadFolder, "output.png");
+    fs.writeFileSync(outputPath, canvas.toBuffer());
+
+    // إرسال الصورة
+    api.sendMessage(
+      { body: " تم إنشاء البنر", attachment: fs.createReadStream(outputPath) },
+      event.threadID,
+      () => {
+        fs.unlinkSync(pathChar);
+        fs.unlinkSync(pathBg);
+        fs.unlinkSync(outputPath);
+      },
+      event.messageID
+    );
+
+  } catch (err) {
+    api.sendMessage(`❌ حصل خطأ: ${err.message}`, event.threadID, event.messageID);
+  }
+};
