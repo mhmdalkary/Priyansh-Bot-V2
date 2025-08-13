@@ -1,5 +1,5 @@
 module.exports.config = {
-  name: "banner3",
+  name: "بنر3",
   version: "1.0.0",
   hasPermssion: 0,
   credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭",
@@ -31,7 +31,7 @@ module.exports.run = async function({ api, args, event, permssion }) {
     o.push(t)
   }
   const msg = ({
-    body: "Reply Message To Choose Style",
+    body: "الرد على الرسالة لاختيار النمط ",
     attachment: o
   })
   return api.sendMessage(msg, event.threadID, (err, info) => {
@@ -85,9 +85,9 @@ module.exports.handleReply = async function({ api, event, args, handleReply, cli
     senderID
   } = event;
   if (handleReply.step == 1) {
-    if(isNaN(event.body)) return api.sendMessage('Not a number :>', event.threadID)
+    if(isNaN(event.body)) return api.sendMessage('ليس رقما  :>', event.threadID)
     api.unsendMessage(handleReply.messageID);
-    return api.sendMessage(`You have chosen style as ${event.body} reply to this message to enter character id`, threadID, function(err, info) {
+    return api.sendMessage(`لقد اخترت النمط كـ  ${event.body} الرد على هذه الرسالة لإدخال معرف الشخصية `, threadID, function(err, info) {
       return global.client.handleReply.push({
         step: 2,
         name: "banner3",
@@ -99,7 +99,7 @@ module.exports.handleReply = async function({ api, event, args, handleReply, cli
   } 
   else if (handleReply.step == 2) {
     api.unsendMessage(handleReply.messageID);
-    return api.sendMessage(`The character you chose is ${event.body} reply to this message and enter the main name`, threadID, function(err, info) {
+    return api.sendMessage(`الشخصية التي اخترتها هي  ${event.body} الرد على هذه الرسالة وإدخال الاسم الرئيسي `, threadID, function(err, info) {
       return global.client.handleReply.push({
         step: 3,
         name: "banner3",
@@ -111,7 +111,7 @@ module.exports.handleReply = async function({ api, event, args, handleReply, cli
     }, messageID);
   } else if (handleReply.step == 3) {
     api.unsendMessage(handleReply.messageID);
-    return api.sendMessage(`You chose the main name ${event.body} reply to this message to enter the subname`, threadID, function(err, info) {
+    return api.sendMessage(`لقد اخترت الاسم الرئيسي  ${event.body} الرد على هذه الرسالة لإدخال الاسم الفرعي `, threadID, function(err, info) {
       return global.client.handleReply.push({
         step: 4,
         name: "banner3",
@@ -124,7 +124,7 @@ module.exports.handleReply = async function({ api, event, args, handleReply, cli
     }, messageID);
   } else if (handleReply.step == 4) {
     api.unsendMessage(handleReply.messageID);
-    return api.sendMessage(`You have chosen the sub-name ${event.body}, reply to this message to choose a color (please enter "no" if you want to use the default color)`, threadID, function(err, info) {
+    return api.sendMessage(`لقد اخترت الاسم الفرعي  ${event.body}, الرد على هذه الرسالة لاختيار اللون (يرجى إدخال "no" إذا كنت تريد استخدام اللون الافتراضي) `, threadID, function(err, info) {
       return global.client.handleReply.push({
         step: 5,
         name: "banner3",
@@ -495,7 +495,7 @@ module.exports.handleReply = async function({ api, event, args, handleReply, cli
       const imageBuffer = canvas.toBuffer();
       fs.writeFileSync(pathImg, imageBuffer);
       return api.sendMessage({
-        body: "Here's Your Photo",
+        body: "هذه صورتك ، استمتع",
         attachment: fs.createReadStream(pathImg)
       },
         event.threadID,
