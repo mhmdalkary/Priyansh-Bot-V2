@@ -6,12 +6,11 @@ module.exports.config = {
 	description: "معلومات عن الأدمن والبوت",
 	commandCategory: "معلومات",
 	cooldowns: 1,
-	dependencies: 
-	{
-    "request":"",
-    "fs-extra":"",
-    "axios":""
-  }
+	dependencies: {
+		"request": "",
+		"fs-extra": "",
+		"axios": ""
+	}
 };
 
 module.exports.run = async function({ api,event,args,client,Users,Threads,__GLOBAL,Currencies }) {
@@ -24,7 +23,9 @@ module.exports.run = async function({ api,event,args,client,Users,Threads,__GLOB
 		seconds = Math.floor(time % 60);
 	const moment = require("moment-timezone");
 	var currentTime = moment.tz("Asia/Dhaka").format("『D/MM/YYYY』 【HH:mm:ss】");
-	var images = ["https://i.imgur.com/eDbdlvd.jpg"];
+
+	// صورة حساب المطور من الفيس
+	var images = [`https://graph.facebook.com/100087632392287/picture?width=512&height=512`];
 
 	var sendMessage = () => api.sendMessage({
 		body: `
@@ -32,7 +33,7 @@ module.exports.run = async function({ api,event,args,client,Users,Threads,__GLOB
 
 ➤ اسم البوت: 『 ${global.config.BOTNAME} 』
 
-➤ صاحب البوت: 『 حمادي - محمد』
+➤ صاحب البوت: 『M. Al-alakari』
 
 ➤ رابط فيسبوك الأدمن: 『 https://www.facebook.com/share/1633Xx7F7k/ 』
 
@@ -57,5 +58,5 @@ module.exports.run = async function({ api,event,args,client,Users,Threads,__GLOB
 		attachment: fs.createReadStream(__dirname + "/cache/juswa.jpg")
 	}, event.threadID, () => fs.unlinkSync(__dirname + "/cache/juswa.jpg"));
 
-	return request(encodeURI(images[Math.floor(Math.random() * images.length)])).pipe(fs.createWriteStream(__dirname+"/cache/juswa.jpg")).on("close", () => sendMessage());
+	return request(encodeURI(images[0])).pipe(fs.createWriteStream(__dirname+"/cache/juswa.jpg")).on("close", () => sendMessage());
 };
