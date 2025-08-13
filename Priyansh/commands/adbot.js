@@ -21,12 +21,12 @@ module.exports.run = async ({ api, event, args }) => {
 
     if (args.length == 0) return api.sendMessage(
         `يمكنك استخدام الأوامر:\n\n` +
-        `${prefix}${this.config.name} user => يعرض معلوماتك.\n` +
-        `${prefix}${this.config.name} user @[الشخص] => يعرض معلومات الشخص المحدد.\n` +
-        `${prefix}${this.config.name} box => يعرض معلومات المجموعة (عدد الأعضاء، المسؤولين، ...)\n` +
-        `${prefix}${this.config.name} admin => معلومات مشرف البوت.`, event.threadID, event.messageID);
+        `${prefix}${this.config.name} يوزر => يعرض معلوماتك.\n` +
+        `${prefix}${this.config.name} يوزر @[الشخص] => يعرض معلومات الشخص المحدد.\n` +
+        `${prefix}${this.config.name} جروب => يعرض معلومات المجموعة (عدد الأعضاء، المسؤولين، ...)\n` +
+        `${prefix}${this.config.name} ادمن => معلومات مشرف البوت.`, event.threadID, event.messageID);
 
-    if (args[0] == "box") {
+    if (args[0] == "جروب") {
         let tid = args[1] || event.threadID;
         let threadInfo = await api.getThreadInfo(tid);
         let img = threadInfo.imageSrc;
@@ -68,7 +68,7 @@ module.exports.run = async ({ api, event, args }) => {
         }
     }
 
-    if (args[0] == "admin") {
+    if (args[0] == "ادمن") {
         let callback = () => api.sendMessage({
             body: `——— معلومات مشرف البوت ———\n` +
                 `الاسم: HAMOD-HMADY\n` +
@@ -83,7 +83,7 @@ module.exports.run = async ({ api, event, args }) => {
             .on('close', () => callback());
     }
 
-    if (args[0] == "user") {
+    if (args[0] == "يوزر") {
         let id;
         if (!args[1]) {
             if (event.type == "message_reply") id = event.messageReply.senderID;
