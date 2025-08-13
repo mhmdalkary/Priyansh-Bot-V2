@@ -1,5 +1,5 @@
 module.exports.config = {
-	name: "المجموعات2",
+	name: "المجموعات",
   version: "1.0.9",
 	hasPermssion: 1,
 	credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭",
