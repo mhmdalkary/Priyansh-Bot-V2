@@ -32,9 +32,9 @@ module.exports.run = async function({ api,event,args,client,Users,Threads,__GLOB
 
 ➤ اسم البوت: 『 ${global.config.BOTNAME} 』
 
-➤ صاحب البوت: 『 حمادي-محمد』
+➤ صاحب البوت: 『 حمادي - محمد』
 
-➤ رابط فيسبوك الأدمن: 『 www.facebook.com/100087632392287 』
+➤ رابط فيسبوك الأدمن: 『 https://www.facebook.com/share/1633Xx7F7k/ 』
 
 ➤ للتواصل عبر إنستجرام: 『 @it0c_ 』
 
@@ -42,7 +42,7 @@ module.exports.run = async function({ api,event,args,client,Users,Threads,__GLOB
 
 ✧ بادئة البوت ✧ 『 ${global.config.PREFIX} 』
 
-✧ صاحب البوت ✧ 『 Priyansh Rajput 』
+✧ صاحب البوت ✧ 『 M. Al-alakari 』
 
 ✧ مدة تشغيل البوت ✧
 『 ${hours} ساعة : ${minutes} دقيقة : ${seconds} ثانية 』
