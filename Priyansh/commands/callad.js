@@ -1,11 +1,11 @@
 module.exports.config = {
-  name: "callad",
+  name: "اتصال",
   version: "1.0.0",
   hasPermssion: 0,
   credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭",
-  description: "Report bug of your bot to admin or comment",
-  commandCategory: "Admin",
-  usages: "[msg]",
+  description: "أرسل تقرير عن خطأ في البوت إلى المشرف أو التعليق",
+  commandCategory: "المشرف",
+  usages: "[رسالتك]",
   cooldowns: 5,
 };
 
@@ -48,7 +48,7 @@ module.exports.handleReply = async function({ api, args, event, handleReply, Use
         if (s.length == 0) {
           for (let ad of idad) {
             api.sendMessage({
-              body: "[📲] Feedback from " + name + " :\n[💬] Content: " + (event.body) || "There's no answer", mentions: [{
+              body: "[CALL ADMIN] التقرير من " + name + " :\n[المحتوى]: " + (event.body) || "لا يوجد رد", mentions: [{
                 id: event.senderID,
                 tag: name
               }]
@@ -65,7 +65,7 @@ module.exports.handleReply = async function({ api, args, event, handleReply, Use
         else {
           for (let ad of idad) {
             api.sendMessage({
-              body: "[📲] Feedback from " + name + ":\n" + (event.body) || "only files that don't have a reply 🧡", attachment: l, mentions: [{
+              body: "[CALL ADMIN] التقرير من " + name + ":\n" + (event.body) || "فقط الملفات بدون محتوى", attachment: l, mentions: [{
                 id: event.senderID,
                 tag: name
               }]
@@ -86,7 +86,7 @@ module.exports.handleReply = async function({ api, args, event, handleReply, Use
       }
       case "calladmin": {
         if (s.length == 0) {
-          api.sendMessage({ body: `[📌] Feedback from admin ${name} to you:\n\n[💬] Content: ${(event.body) || "no reply 🌸 "}\n\n» Reply to this message if you want to continue sending  reports to my owner 𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭`, mentions: [{ tag: name, id: event.senderID }] }, handleReply.id, (e, data) => global.client.handleReply.push({
+          api.sendMessage({ body: `[تقرير من المشرف ${name} إليك]:\n\n[المحتوى]: ${(event.body) || "لا يوجد رد"}\n\n» رُد على هذه الرسالة إذا أردت متابعة إرسال التقارير إلى صاحبي 𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭`, mentions: [{ tag: name, id: event.senderID }] }, handleReply.id, (e, data) => global.client.handleReply.push({
             name: this.config.name,
             author: event.senderID,
             messageID: data.messageID,
@@ -94,7 +94,7 @@ module.exports.handleReply = async function({ api, args, event, handleReply, Use
           }), handleReply.messID);
         }
         else {
-          api.sendMessage({ body: `[📌] Feedback from admin ${name} to you:\n\n[💬] Content: ${(event.body) || "only files with no reply 🌸 "}\n[💌] Admin files sent to you\n\n» Reply to this message if you want to continue sending reports to my owner 𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭`, attachment: l, mentions: [{ tag: name, id: event.senderID }] }, handleReply.id, (e, data) => global.client.handleReply.push({
+          api.sendMessage({ body: `[تقرير من المشرف ${name} إليك]:\n\n[المحتوى]: ${(event.body) || "فقط الملفات بدون رد"}\n[المرفقات] ملفات المشرف تم إرسالها إليك\n\n» رُد على هذه الرسالة إذا أردت متابعة إرسال التقارير إلى صاحبي 𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭`, attachment: l, mentions: [{ tag: name, id: event.senderID }] }, handleReply.id, (e, data) => global.client.handleReply.push({
             name: this.config.name,
             author: event.senderID,
             messageID: data.messageID,
@@ -148,7 +148,7 @@ module.exports.run = async function({ api, event, Threads, args, Users }) {
     }
   }
     if (!args[0] && event.messageReply.attachments.length == 0)
-      return api.sendMessage(`You haven't entered what to report 📋`,
+      return api.sendMessage(`أنت لم تدخل ما تريد الإبلاغ عنه`,
         event.threadID,
         event.messageID
       );
@@ -163,15 +163,13 @@ module.exports.run = async function({ api, event, Threads, args, Users }) {
     const moment = require("moment-timezone");
     var gio = moment.tz("Asia/Manila").format("HH:mm:ss D/MM/YYYY");
     var soad = global.config.ADMINBOT.length;
-    api.sendMessage(`[🤖] - Bot has just successfully sent your message to ${soad} to my owner 𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭 🍄 \n[⏰] - Time: ${gio}`,
+    api.sendMessage(`[BOT] - تم إرسال رسالتك بنجاح إلى ${soad} إلى صاحبي HMADY\n[الوقت]: ${gio}`,
       event.threadID,
       () => {
         var idad = global.config.ADMINBOT;
         if (s.length == 0) {
           for (let ad of idad) {
-            api.sendMessage({ body: `📱[ CALL ADMIN ]📱 \n\n\n[👤] Report from: ${name}\n[❗] ID User ${uid}\n[🗣️] BOX: ${namethread}\n[🔰] ID BOX: ${idbox}\n\n[💌] Inbox: ${args.join(
-              " "
-            )}\n[⏰] Time: ${gio}`, mentions: [{ id: event.senderID, tag: name }] },
+            api.sendMessage({ body: `[CALL ADMIN]\n\n[المستخدم]: ${name}\n[معرف المستخدم]: ${uid}\n[الصندوق]: ${namethread}\n[معرف الصندوق]: ${idbox}\n[الرسالة]: ${args.join(" ")}\n[الوقت]: ${gio}`, mentions: [{ id: event.senderID, tag: name }] },
               ad, (error, info) =>
               global.client.handleReply.push({
                 name: this.config.name,
@@ -187,9 +185,7 @@ module.exports.run = async function({ api, event, Threads, args, Users }) {
         else {
           for (let ad of idad) {
             api.sendMessage({
-              body: `📱 ===[CALL ADMIN]====📱\n\n\n[👤] Report from: ${name}\n[❗] ID User ${uid}\n[ 👧 👩 👧 👨 ] BOX: ${namethread}\n[🔰] ID BOX: ${idbox}\n\n[💌] Inbox: ${(args.join(
-                " "
-              )) || "only files that do not have report ❤️ content"}\n[⏰] Time: ${gio}\n[📌] Attach a file`, attachment: l, mentions: [{ id: event.senderID, tag: name }]
+              body: `[CALL ADMIN]\n\n[المستخدم]: ${name}\n[معرف المستخدم]: ${uid}\n[الصندوق]: ${namethread}\n[معرف الصندوق]: ${idbox}\n[الرسالة]: ${(args.join(" ")) || "فقط ملفات بدون محتوى"}\n[الوقت]: ${gio}\n[المرفقات]: أرسل الملف`, attachment: l, mentions: [{ id: event.senderID, tag: name }]
             },
               ad, (error, info) =>
               global.client.handleReply.push({
