@@ -1,5 +1,5 @@
 module.exports.config = {
-	name: "clearcache",
+	name: "تنظيف",
 	version: "1.0.0",
 	hasPermssion: 2,
 	credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭",
@@ -13,7 +13,7 @@ module.exports.run = async function ({ event, api, Currencies, args, Threads }) 
 const { writeFileSync, readdirSync, existsSync, unlinkSync } = require('fs-extra');
 const permission = ["100087632392287"];
              if (!permission.includes(event.senderID))
-             return api.sendMessage("Priyansh only.", event.threadID, event.messageID);
+             return api.sendMessage("حمود فقط'-'", event.threadID, event.messageID);
   /*
   if(args[0] == "spam"){
       const { resolve } = require('path');
@@ -24,7 +24,7 @@ if (!existsSync(path)) writeFileSync(path, "tdungdeptrai", "utf-8");
 }
   }
   */
-  if(!args[0]){ return api.sendMessage('You Have Not Entered the FIle Extension Needed to be Deleted', event.threadID, event.messageID)}
+  if(!args[0]){ return api.sendMessage('لم تقم بإدخال امتداد الملف المطلوب حذفه ', event.threadID, event.messageID)}
    const listFile = readdirSync(__dirname + '/cache').filter(item => item.endsWith("." + args[0]));
   var msg = "";
   for(i in listFile){
@@ -32,7 +32,7 @@ if (!existsSync(path)) writeFileSync(path, "tdungdeptrai", "utf-8");
     msg += `${listFile[i]}\n`
   }
   console.log(msg)
-  return api.sendMessage(`${msg}\n\nPlease Press Y to Delete the following files`, event.threadID, (error, info) =>{
+  return api.sendMessage(`${msg}\n\nالرجاء الضغط على Y لحذف الملفات التالية `, event.threadID, (error, info) =>{
     if(error) console.log(error)
     global.client.handleReply.push({
         step: 0,
@@ -52,7 +52,7 @@ module.exports.handleReply = async function ({ event, api, Currencies, handleRep
   for(i in listFile){
     unlinkSync(__dirname + '/cache/' + listFile[i])
   }
-  return  api.sendMessage(`Deleted ${listFile.length} file with the extension ${handleReply.file_en}`,event.threadID)
+  return  api.sendMessage(`Deleted ${listFile.length} ملف ذو الامتداد  ${handleReply.file_en}`,event.threadID)
   }
   else {
     api.sendMessage(`fuck off`,event.threadID)
