@@ -1,11 +1,11 @@
 module.exports.config = {
-  name: "bestu",
+  name: "بيستو",
   version: "7.3.1",
   hasPermssion: 0,
   credits: " Priyansh Rajput", 
-  description: "Get Pair From Mention",
+  description: "احصل على زوج من المينشن",
   commandCategory: "png",
-  usages: "[@mention]",
+  usages: "[@مينشن]",
   cooldowns: 5, 
   dependencies: {
       "axios": "",
@@ -37,15 +37,21 @@ async function makeImage({ one, two }) {
   let avatarOne = __root + `/avt_${one}.png`;
   let avatarTwo = __root + `/avt_${two}.png`;
 
+  // تحميل صورة الشخص الأول
   let getAvatarOne = (await axios.get(`https://graph.facebook.com/${one}/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`, { responseType: 'arraybuffer' })).data;
   fs.writeFileSync(avatarOne, Buffer.from(getAvatarOne, 'utf-8'));
 
+  // تحميل صورة الشخص الثاني
   let getAvatarTwo = (await axios.get(`https://graph.facebook.com/${two}/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`, { responseType: 'arraybuffer' })).data;
   fs.writeFileSync(avatarTwo, Buffer.from(getAvatarTwo, 'utf-8'));
 
+  // تحويل الصور لدائرة
   let circleOne = await jimp.read(await circle(avatarOne));
   let circleTwo = await jimp.read(await circle(avatarTwo));
-  batgiam_img.composite(circleOne.resize(191, 191), 93, 111).composite(circleTwo.resize(190, 190), 434, 107);
+
+  // تركيب الصور على الصورة الأساسية
+  batgiam_img.composite(circleOne.resize(191, 191), 93, 111)
+             .composite(circleTwo.resize(190, 190), 434, 107);
 
   let raw = await batgiam_img.getBufferAsync("image/png");
 
@@ -55,6 +61,7 @@ async function makeImage({ one, two }) {
 
   return pathImg;
 }
+
 async function circle(image) {
   const jimp = require("jimp");
   image = await jimp.read(image);
@@ -66,9 +73,12 @@ module.exports.run = async function ({ event, api, args }) {
   const fs = global.nodemodule["fs-extra"];
   const { threadID, messageID, senderID } = event;
   const mention = Object.keys(event.mentions);
-  if (!mention[0]) return api.sendMessage("Kisi 1 ko mantion to kr tootiye 😅", threadID, messageID);
+  if (!mention[0]) return api.sendMessage("يجب أن تذكر شخص واحد 😅", threadID, messageID);
   else {
       const one = senderID, two = mention[0];
-      return makeImage({ one, two }).then(path => api.sendMessage({ body: "✧•❁𝐅𝐫𝐢𝐞𝐧𝐝𝐬𝐡𝐢𝐩❁•✧\n\n╔═══❖••° °••❖═══╗\n\n   𝐒𝐮𝐜𝐜𝐞𝐬𝐬𝐟𝐮𝐥 𝐏𝐚𝐢𝐫𝐢𝐧𝐠\n\n╚═══❖••° °••❖═══╝\n\n   ✶⊶⊷⊷❍⊶⊷⊷✶\n\n       👑𝐘𝐄 𝐋𝐄 𝐌𝐈𝐋 𝐆𝐘𝐀 ❤\n\n𝐓𝐄𝐑𝐀 𝐁𝐄𝐒𝐓𝐔 🩷\n\n   ✶⊶⊷⊷❍⊶⊷⊷✶", attachment: fs.createReadStream(path) }, threadID, () => fs.unlinkSync(path), messageID));
+      return makeImage({ one, two }).then(path => api.sendMessage({ 
+        body: "✧•❁ الصداقة ❁•✧\n\n╔═══❖••° °••❖═══╗\n\n   تم التوافق بنجاح\n\n╚═══❖••° °••❖═══╝\n\n   ✶⊶⊷⊷❍⊶⊷⊷✶\n\n       👑لقد وجدتم بعضكم ❤\n\nصديقتك المفضلة 🩷\n\n   ✶⊶⊷⊷❍⊶⊷⊷✶", 
+        attachment: fs.createReadStream(path) 
+      }, threadID, () => fs.unlinkSync(path), messageID));
   }
-    }
+}
