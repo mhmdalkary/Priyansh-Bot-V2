@@ -1,5 +1,5 @@
 module.exports.config = {
-	name: "اختار",
+	name: "اختاري",
 	version: "1.0.1",
 	hasPermssion: 0,
 	credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭",
@@ -12,7 +12,7 @@ module.exports.config = {
 module.exports.languages = {
 	
 	"ar": {
-		"return": "%1 هو الأنسب لك، أعتقد ذلك :التفكير: "
+		"return": "%1 هو الأنسب لك، أعتقد ذلك :😊: "
 	}
 }
 
