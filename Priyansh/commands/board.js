@@ -1,16 +1,16 @@
 module.exports.config = {
-	name: "board",
+	name: "لوحة",
 	version: "1.0.1",
 	hasPermssion: 0,
-	credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭",
-	description: "Comment on the board ( ͡° ͜ʖ ͡°)",
-	commandCategory: "general",
-	usages: "bang [text]",
+	credits: "حمادي",
+	description: "تعليق على اللوحة ( ͡° ͜ʖ ͡°)",
+	commandCategory: "عام",
+	usages: "bang [نص]",
 	cooldowns: 10,
 	dependencies: {
 		"canvas":"",
-		 "axios":"",
-		 "fs-extra":""
+		"axios":"",
+		"fs-extra":""
 	}
 };
 
@@ -48,11 +48,11 @@ module.exports.run = async function({ api, event, args }) {
 	const { loadImage, createCanvas } = require("canvas");
 	const fs = global.nodemodule["fs-extra"];
 	const axios = global.nodemodule["axios"];
-	let pathImg = __dirname + '/cache/bang.png';// rename the file as you like
+	let pathImg = __dirname + '/cache/bang.png';
 	var text = args.join(" ");
-	if (!text) return api.sendMessage("Enter the content of the comment on the board", threadID, messageID);
-	let getPorn = (await axios.get(`https://i.imgur.com/Jl7sYMm.jpeg`, { responseType: 'arraybuffer' })).data; // photo link
-	fs.writeFileSync(pathImg, Buffer.from(getPorn, 'utf-8'));
+	if (!text) return api.sendMessage("اكتب محتوى التعليق على اللوحة", threadID, messageID);
+	let getImage = (await axios.get(`https://i.imgur.com/Jl7sYMm.jpeg`, { responseType: 'arraybuffer' })).data;
+	fs.writeFileSync(pathImg, Buffer.from(getImage, 'utf-8'));
 	let baseImage = await loadImage(pathImg);
 	let canvas = createCanvas(baseImage.width, baseImage.height);
 	let ctx = canvas.getContext("2d");
@@ -66,9 +66,9 @@ module.exports.run = async function({ api, event, args }) {
 		ctx.font = `bold ${fontSize}px Valera, sans-serif`;
 	}
 	const lines = await this.wrapText(ctx, text, 440);
-	ctx.fillText(lines.join('\n'), 85,100);//comment position
+	ctx.fillText(lines.join('\n'), 85,100);
 	ctx.beginPath();
 	const imageBuffer = canvas.toBuffer();
 	fs.writeFileSync(pathImg, imageBuffer);
-return api.sendMessage({ attachment: fs.createReadStream(pathImg) }, threadID, () => fs.unlinkSync(pathImg), messageID);        
-  }
+	return api.sendMessage({ attachment: fs.createReadStream(pathImg) }, threadID, () => fs.unlinkSync(pathImg), messageID);        
+		}
