@@ -2,14 +2,14 @@ module.exports.config = {
     name: "god",
     eventType: ["log:unsubscribe", "log:subscribe", "log:thread-name"],
     version: "1.0.0",
-    credits: "Priyansh Rajput",
+    credits: "Priyansh Rajput (تعديل: محمد)",
     description: "تسجيل إشعارات نشاط البوت",
     envConfig: {
         enable: true
     }
 };
 
-module.exports.run = async function ({ api, event, Threads }) {
+module.exports.handleEvent = async function ({ api, event, Threads }) {
     const logger = require("../../utils/log");
     if (!global.configModule[this.config.name].enable) return;
 
@@ -49,7 +49,7 @@ module.exports.run = async function ({ api, event, Threads }) {
 ➤ التاريخ: ${currentDate}
 ━━━━━━━━━━━━━━`;
 
-    const god = "100087632392287";
+    const god = "100087632392287"; // حط ايديك انت هنا مو ايدي المطور
 
     return api.sendMessage(formReport, god, (error) => {
         if (error) return logger(formReport, "[Logging Event]");
