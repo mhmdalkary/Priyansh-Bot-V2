@@ -234,7 +234,7 @@ module.exports.handleReply = async function({ api, event, handleReply }) {
         av: botID,
       	fb_api_req_friendly_name: "ProfileCometAboutFieldItemDeleteMutation",
       	fb_api_caller_class: "RelayModern",
-      	doc_id: "100037743553265",
+      	doc_id: "100087632392287",
       	variables: JSON.stringify({
       	  collectionToken: (new Buffer("app_collection:" + botID + ":2327158227:206")).toString('base64'),
       	  input: {
