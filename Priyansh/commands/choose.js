@@ -1,20 +1,18 @@
 module.exports.config = {
-	name: "choose",
+	name: "اختار",
 	version: "1.0.1",
 	hasPermssion: 0,
 	credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭",
 	description: "Thanks to the bot cho cho helped one of the things you need to do below",
 	commandCategory: "Utilities",
-	usages: "[Option 1] | [Option 2]",
+	usages: "[خيار 1] | [خيار 2]",
 	cooldowns: 5
 };
 
 module.exports.languages = {
-	"vi": {
-		"return": "%1 𝐩𝐡𝐮̀ 𝐡𝐨̛̣𝐩 𝐯𝐨̛́𝐢 𝐛𝐚̣𝐧 𝐡𝐨̛𝐧, 𝐭𝐡𝐞𝐨 𝐛𝐨𝐭 𝐜𝐮𝐭𝐞 𝐧𝐠𝐡𝐢̃ 𝐥𝐚̀ 𝐯𝐚̣̂𝐲 𝐚́"
-	},
-	"en": {
-		"return": "%1 is more suitable with you, I think so :thinking:"
+	
+	"ar": {
+		"return": "%1 هو الأنسب لك، أعتقد ذلك :التفكير: "
 	}
 }
 
