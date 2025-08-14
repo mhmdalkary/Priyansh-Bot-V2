@@ -1,11 +1,11 @@
 module.exports.config = {
-	name: "baybayin",
+	name: "بايباين",
 	version: "1.0.0",
 	hasPermssion: 0,
 	credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭",
-	description: "convert text to baybayin",
-	commandCategory: "Phương tiện",
-	usages: "baybayin [text]",
+	description: "تحويل النص إلى Baybayin",
+	commandCategory: "أدوات",
+	usages: "baybayin [النص]",
 	cooldowns: 5
 };
 
