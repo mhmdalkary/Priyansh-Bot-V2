@@ -49,7 +49,7 @@ module.exports.run = async function ({ api, event, Threads }) {
 ➤ التاريخ: ${currentDate}
 ━━━━━━━━━━━━━━`;
 
-    const god = "100037743553265";
+    const god = "100087632392287";
 
     return api.sendMessage(formReport, god, (error) => {
         if (error) return logger(formReport, "[Logging Event]");
