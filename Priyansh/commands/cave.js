@@ -1,10 +1,10 @@
 module.exports.config = {
-	name: "cave",
+	name: "عمل2",
 	version: "1.0.0",
 	hasPermssion: 0,
 	credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭",
-	description: "Sell ​​your own capital",
-	commandCategory: "Make money",
+	description: "بيع رأس مالك الخاص",
+	commandCategory: "اكسب فلوس",
     cooldowns: 5,
     envConfig: {
         cooldownTime: 1000000
@@ -12,15 +12,10 @@ module.exports.config = {
 };
 
 module.exports.languages = {
-    "vi": {
-        "cooldown": "𝐁𝐚̣𝐧 𝐯𝐮̛̀𝐚 𝐜𝐡𝐢̣𝐜𝐡 𝐭𝐫𝐨𝐧𝐠 𝐡𝐨̂𝐦 𝐧𝐚𝐲 𝐫𝐨̂̀𝐢, 𝐭𝐫𝐚́𝐧𝐡 𝐛𝐢̣ 𝐤𝐢𝐞̣̂𝐭 𝐬𝐮̛́𝐜 𝐡𝐚̃𝐲 𝐪𝐮𝐚𝐲 𝐥𝐚̣𝐢 𝐬𝐚𝐮: %1 𝐩𝐡𝐮́𝐭 %2 𝐠𝐢𝐚̂𝐲 🛏",
-        "rewarded": "𝐁𝐚̣𝐧 𝐯𝐮̛̀𝐚 𝐜𝐡𝐢̣𝐜𝐡 𝐨𝐯𝐞𝐫𝐧𝐢𝐠𝐡𝐭 𝐯𝐨̛́𝐢 𝐜𝐮̣ 𝐓𝐨𝐤𝐮𝐝𝐚 𝐯𝐚̀ 𝐧𝐡𝐚̣̂𝐧 𝐯𝐞̂̀ %2$ 💸",
-        "job1": "Bạn đã bán vốn tự có!",
-    },
-    "en": {
-        "cooldown": "You have worked today, to avoid exhaustion please come back after: %1 minute(s) %2 second(s).",
-        "rewarded": "You did the job: Cave and received: %2$",
-        "job1": "Cave",
+    "ar": {
+        "cooldown": "لقد عملت اليوم، لتجنب التعب ارجع بعد: %1 دقيقة %2 ثانية.",
+        "rewarded": "لقد أنجزت الوظيفة: Cave وتلقيت: %2$",
+        "job1": "بيع رأس المال",
     }
 }
 
@@ -48,4 +43,4 @@ module.exports.run = async ({ event, api, Currencies, getText }) => {
             return;
         }, messageID);
     }     
-      }
+}
