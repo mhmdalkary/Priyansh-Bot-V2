@@ -14,7 +14,7 @@ module.exports.config = {
 module.exports.languages = {
     "ar": {
         "cooldown": "لقد عملت اليوم، لتجنب التعب ارجع بعد: %1 دقيقة %2 ثانية.",
-        "rewarded": "لقد أنجزت الوظيفة: Cave وتلقيت: %2$",
+        "rewarded": "لقد أنجزت الوظيفة: كهف وتلقيت: %2$",
         "job1": "بيع رأس المال",
     }
 }
