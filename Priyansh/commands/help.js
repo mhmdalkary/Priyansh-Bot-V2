@@ -1,3 +1,29 @@
+module.exports.config = {  
+	name: "اوامر",  
+	version: "1.0.5",  
+	hasPermssion: 0,  
+	credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭 (تعديل: مترجم + زخرفة)",  
+	description: "『قائمة اوامر البوت』",  
+	commandCategory: "النظام",  
+	usages: "[اسم_الأمر / رقم_الصفحة]",  
+	cooldowns: 1,  
+	envConfig: {  
+		autoUnsend: false,  
+		delayUnsend: 200  
+	}  
+};  
+
+module.exports.languages = {  
+	"ar": {  
+		"moduleInfo": "»====『📜 تفاصيل الأمر 📜』====«\n⊹ 『الاسم』: %1\n⊹ 『الوصف』: %2\n⊹ 『الاستخدام』: %3\n⊹ 『الفئة』: %4\n⊹ 『وقت الانتظار』: %5 ثانية\n⊹ 『الصلاحية』: %6\n⊹ 『الكود بواسطة』: %7\n\n➤ مثال:\n  %3\n»================================«",  
+		"helpList": '[ يوجد %1 أوامر في البوت، استخدم: "%2اوامر اسم_الأمر" لمعرفة طريقة الاستعمال! ]',  
+		"user": "مستخدم",  
+        "adminGroup": "ادمن المجموعة",  
+        "adminBot": "ادمن البوت"  
+	}  
+};  
+
+// شرح الأمر المفصل
 module.exports.handleEvent = async function ({ api, event, getText }) {  
 	const { commands } = global.client;  
 	const { threadID, messageID, body } = event;  
@@ -46,7 +72,7 @@ module.exports.handleEvent = async function ({ api, event, getText }) {
 
 // تغيير الصفحة لازم يكون رد على الرسالة
 module.exports.handleReply = function({ api, event }) {  
-	const { body, threadID, messageID, messageReply } = event;  
+	const { body, threadID, messageReply } = event;  
 	if (!messageReply) return; // لازم يكون الرد على رسالة القائمة  
 	if (!global.temp || !global.temp.commandPages || !global.temp.commandPages[threadID]) return;  
 
