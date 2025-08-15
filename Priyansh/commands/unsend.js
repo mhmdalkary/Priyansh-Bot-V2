@@ -1,5 +1,5 @@
 module.exports.config = {
-	name: "unsend",
+	name: "ح",
 	version: "1.0.1",
 	hasPermssion: 0,
 	credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭",
@@ -14,9 +14,9 @@ module.exports.languages = {
 		"returnCant": "Không thể gỡ tin nhắn của người khác.",
 		"missingReply": "Hãy reply tin nhắn cần gỡ."
 	},
-	"en": {
-		"returnCant": "Kisi Aur Ka Msg M Kese Unsend Karu.",
-		"missingReply": "Mere Jis Msg ko Unsend Karna Hai Usme Reply Karke Likkho."
+	"ar": {
+		"returnCant": "كيف يمكنني إلغاء إرسال رسالة من شخص آخر؟ ",
+		"missingReply": "اكتب ردًا على رسالتي التي تريد إلغاء إرسالها ."
 	}
 }
 
