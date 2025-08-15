@@ -1,5 +1,5 @@
 module.exports.config = {
-	name: "fish",
+	name: "صيد",
 	version: "1.0.0",
 	hasPermssion: 0,
 	credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭",
@@ -14,10 +14,10 @@ module.exports.config = {
 module.exports.languages = {
     
         
-    "en": {
-        "cooldown": "You have worked today, to avoid exhaustion please come back after: %1 minute(s) %2 second(s).",
-        "rewarded": "You've got big fish again today, and been sold for: %2$",
-        "job1": "Fishing",
+    "ar": {
+        "cooldown": "لقد عملت اليوم، لتجنب الإرهاق يرجى العودة بعد: %1 دقيقة %2 ثانية. ",
+        "rewarded": "لقد حصلت على سمكة كبيرة مرة أخرى اليوم، وتم بيعها مقابل: %2$ ",
+        "job1": "الصيد",
     }
 }
 
