@@ -1,5 +1,5 @@
 module.exports.config = {
-    name: "marry",
+    name: "زوجني6",
     version: "2.0.0",
     hasPermssion: 0,
     credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭",
@@ -66,9 +66,9 @@ module.exports.run = async function ({ event, api, args }) {
     const fs = global.nodemodule["fs-extra"];
     const { threadID, messageID, senderID } = event;
     const mention = Object.keys(event.mentions);
-    if (!mention[0]) return api.sendMessage("Vui lòng tag 1 người.", threadID, messageID);
+    if (!mention[0]) return api.sendMessage("تتزوجوني انا؟ سويله تاغ", threadID, messageID);
     else {
         const one = senderID, two = mention[0];
-        return makeImage({ one, two }).then(path => api.sendMessage({ body: "Bae please give me a chance to be with you for the rest of my life\nI love you so much 💟💟", attachment: fs.createReadStream(path) }, threadID, () => fs.unlinkSync(path), messageID));
+        return makeImage({ one, two }).then(path => api.sendMessage({ body: "يا حبيبي من فضلك أعطني فرصة لأكون معك لبقية حياتي 💟", attachment: fs.createReadStream(path) }, threadID, () => fs.unlinkSync(path), messageID));
     }
 }
