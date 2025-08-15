@@ -1,11 +1,11 @@
 module.exports.config = {
-	name: "giveaway",
+	name: "جيفواي",
 	version: "0.0.1",
 	hasPermssion: 0,
 	credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭",
 	description: "",
-	commandCategory: "other",
-	usages: "[create/details/join/roll/end] [IDGiveAway]",
+	commandCategory: "اخرى",
+	usages: "[انشاء/تفاصيل/انضم/سحب/انهاء] [ID السحب]",
 	cooldowns: 5
 };
 
@@ -18,30 +18,30 @@ module.exports.handleReaction = async ({ api, event, Users, handleReaction }) =>
 		var value = await api.getThreadInfo(event.threadID);
 		if (!(value.nicknames)[event.userID]) value = (await Users.getInfo(event.userID)).name;
 		else value = (value.nicknames)[event.userID];
-		return api.sendMessage(`${value} Đã rời giveaway có ID: #${handleReaction.ID}`, event.userID);
+		return api.sendMessage(`➤ ${value} 『غادر』 السحب ذو المعرف: #${handleReaction.ID}`, event.userID);
 	}
 	data.joined.push(event.userID);
 	global.data.GiveAway.set(handleReaction.ID, data);
 	var value = await api.getThreadInfo(event.threadID);
 	if (!(value.nicknames)[event.userID]) value = (await Users.getInfo(event.userID)).name;
 	else value = (value.nicknames)[event.userID];
-	return api.sendMessage(`${value} Đã tham gia thành công giveaway có ID: #${handleReaction.ID}`, event.userID);
+	return api.sendMessage(`➤ ${value} 『انضم بنجاح』 الى السحب ذو المعرف: #${handleReaction.ID}`, event.userID);
 }
 
 module.exports.run = async ({ api, event, args, Users }) => {
 	if (!global.data.GiveAway) global.data.GiveAway = new Map();
-	if (args[0] == "create") {
+	if (args[0] == "انشاء") {
 		let reward = args.slice(1).join(" ");
 		let randomNumber = (Math.floor(Math.random() * 100000) + 100000).toString().substring(1);
 		var value = await api.getThreadInfo(event.threadID);
 		if (!(value.nicknames)[event.senderID]) value = (await Users.getInfo(event.senderID)).name;
 		else value = (value.nicknames)[event.senderID];
 		api.sendMessage(
-			"====== Give Away ======" +
-			"\nCreated by: " + value +
-			"\nReward: " + reward +
-			"\nID GiveAway: #" + randomNumber +
-			"\nREACTION TO THIS MESSAGE TO JOIN GIVE AWAY"
+			"»======『السحب』======«" +
+			"\n➤ انشأه: " + value +
+			"\n➤ الجائزة: " + reward +
+			"\n➤ معرف السحب: #" + randomNumber +
+			"\n⊹ تفاعل مع هذه الرسالة للانضمام للسحب"
 			, event.threadID, (err, info) => {
 				let dataGA = {
 					"ID": randomNumber,
@@ -62,61 +62,61 @@ module.exports.run = async ({ api, event, args, Users }) => {
 			}
 		)
 	}
-	else if (args[0] == "details") {
+	else if (args[0] == "تفاصيل") {
 		let ID = args[1].replace("#", "");
-		if (!ID) return api.sendMessage("Bạn phải nhập ID GiveAway để có thể xem thông tin giveaway!", event.threadID, event.messageID);
+		if (!ID) return api.sendMessage("➤ يجب ان تكتب معرف السحب لعرض التفاصيل ⊹", event.threadID, event.messageID);
 		let data = global.data.GiveAway.get(ID);
-		if (!data) return api.sendMessage("ID GiveAway bạn nhập không tồn tại!", event.threadID, event.messageID);
+		if (!data) return api.sendMessage("➤ معرف السحب الذي ادخلته غير موجود ⊹", event.threadID, event.messageID);
 		return api.sendMessage(
-			"====== Give Away ======" +
-			"\nCreated by: " + data.author + "(" + data.authorID + ")" +
-			"\nReward: " + data.reward +
-			"\nID GiveAway: #" + data.ID +
-			"\nTổng số thành viên đã tham gia giveaway: " + data.joined.length + " người" +
-			"\nTrạng thái: " + data.status
+			"»======『السحب』======«" +
+			"\n➤ انشأه: " + data.author + "(" + data.authorID + ")" +
+			"\n➤ الجائزة: " + data.reward +
+			"\n➤ معرف السحب: #" + data.ID +
+			"\n➤ عدد الاعضاء المشاركين: " + data.joined.length + " شخص" +
+			"\n➤ الحالة: " + data.status
 			, event.threadID, data.messageID
 		);
 	}
-	else if (args[0] == "join") {
+	else if (args[0] == "انضم") {
 		let ID = args[1].replace("#", "");
-		if (!ID) return api.sendMessage("Bạn phải nhập ID GiveAway để có thể tham gia giveaway!", event.threadID, event.messageID);
+		if (!ID) return api.sendMessage("➤ يجب ان تكتب معرف السحب للانضمام ⊹", event.threadID, event.messageID);
 		let data = global.data.GiveAway.get(ID);
-		if (!data) return api.sendMessage("ID GiveAway bạn nhập không tồn tại!", event.threadID, event.messageID);
-		if (data.joined.includes(event.senderID)) return api.sendMessage("Bạn đã tham gia giveaway này", event.threadID);
+		if (!data) return api.sendMessage("➤ معرف السحب الذي ادخلته غير موجود ⊹", event.threadID, event.messageID);
+		if (data.joined.includes(event.senderID)) return api.sendMessage("➤ لقد انضممت مسبقًا لهذا السحب ⊹", event.threadID);
 		data.joined.push(event.senderID);
 		global.data.GiveAway.set(ID, data);
 		var value = await api.getThreadInfo(event.threadID);
 		if (!(value.nicknames)[event.userID]) value = (await Users.getInfo(event.senderID)).name;
-		else value = (value.nicknames)[event.senderID];
-		return api.sendMessage(`${value} Đã tham gia thành công giveaway có ID: #${ID}`, event.senderID);
+		else value = (value.nicknames)[event.userID];
+		return api.sendMessage(`➤ ${value} 『انضم بنجاح』 الى السحب ذو المعرف: #${ID}`, event.senderID);
 	}
-	else if (args[0] == "roll") {
+	else if (args[0] == "سحب") {
 		let ID = args[1].replace("#", "");
-		if (!ID) return api.sendMessage("Bạn phải nhập ID GiveAway để có thể tham gia giveaway!", event.threadID, event.messageID);
+		if (!ID) return api.sendMessage("➤ يجب ان تكتب معرف السحب ⊹", event.threadID, event.messageID);
 		let data = global.data.GiveAway.get(ID);
-		if (!data) return api.sendMessage("ID GiveAway bạn nhập không tồn tại!", event.threadID, event.messageID);
-		if (data.authorID !== event.senderID) return api.sendMessage("Bạn không phải là người chủ trì ID GiveaWay này!", event.threadID, event.messageID);
+		if (!data) return api.sendMessage("➤ معرف السحب الذي ادخلته غير موجود ⊹", event.threadID, event.messageID);
+		if (data.authorID !== event.senderID) return api.sendMessage("➤ انت لست منشئ هذا السحب ⊹", event.threadID, event.messageID);
 		let winner = data.joined[Math.floor(Math.random() * data.joined.length)];
 		let userInfo = await Users.getInfo(winner);
 		var name = userInfo.name;
 		return api.sendMessage({
-			body: `Yahoo ${name}, bạn đã thắng giveaway có ID: #${data.ID}\nBạn hãy liên hệ tới: ${data.author}(https://fb.me/${data.authorID})`,
+			body: `『مبروك』 ${name}, لقد فزت بالسحب ذو المعرف: #${data.ID}\n➤ تواصل مع: ${data.author}(https://fb.me/${data.authorID})`,
 			mentions: [{
 				tag: name,
 				id: winner
 			}]
 		}, event.threadID, event.messageID);
 	}
-	else if (args[0] == "end") {
+	else if (args[0] == "انهاء") {
 		let ID = args[1].replace("#", "");
-		if (!ID) return api.sendMessage("Bạn phải nhập ID GiveAway để có thể tham gia giveaway!", event.threadID, event.messageID);
+		if (!ID) return api.sendMessage("➤ يجب ان تكتب معرف السحب ⊹", event.threadID, event.messageID);
 		let data = global.data.GiveAway.get(ID);
-		if (!data) return api.sendMessage("ID GiveAway bạn nhập không tồn tại!", event.threadID, event.messageID);
-		if (data.authorID !== event.senderID) return api.sendMessage("Bạn không phải là người chủ trì ID GiveaWay này!", event.threadID, event.messageID);
+		if (!data) return api.sendMessage("➤ معرف السحب الذي ادخلته غير موجود ⊹", event.threadID, event.messageID);
+		if (data.authorID !== event.senderID) return api.sendMessage("➤ انت لست منشئ هذا السحب ⊹", event.threadID, event.messageID);
 		data["status"] = "ended";
 		global.data.GiveAway.set(ID, data);
 		api.unsendMessage(data.messageID);
-		return api.sendMessage(`GiveAway có ID: #${data.ID} đã kết thúc bởi ${data.author}`, event.threadID, event.messageID);
+		return api.sendMessage(`➤ تم انهاء السحب ذو المعرف: #${data.ID} بواسطة 『${data.author}』`, event.threadID, event.messageID);
 	}
 	else return global.utils.throwError(this.config.name, event.threadID, event.messageID);
 }
