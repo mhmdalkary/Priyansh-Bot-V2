@@ -56,7 +56,7 @@ module.exports.handleEvent = async function({
 		off: "Tắt",
 		successText: "resend thành công"
 	},
-	en: {
+	ar: {
 		on: "on",
 		off: "off",
 		successText: "resend success!"
