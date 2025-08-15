@@ -1,5 +1,5 @@
 module.exports.config = {
-	name: "einstein",
+	name: "ألبرت",
 	version: "3.1.1",
 	hasPermssion: 0,
 	credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭",
@@ -50,7 +50,7 @@ module.exports.run = async function({ api, event, args }) {
 	const axios = global.nodemodule["axios"];
 	let pathImg = __dirname + '/cache/einstein.png';
 	var text = args.join(" ");
-	if (!text) return api.sendMessage("Enter the content of the comment on the board", threadID, messageID);
+	if (!text) return api.sendMessage("اكتب شي بعد الامر 🥺", threadID, messageID);
 	let getPorn = (await axios.get(`https://i.ibb.co/941yM5Y/Picsart-22-08-13-21-34-35-220.jpg`, { responseType: 'arraybuffer' })).data;
 	fs.writeFileSync(pathImg, Buffer.from(getPorn, 'utf-8'));
 	let baseImage = await loadImage(pathImg);
