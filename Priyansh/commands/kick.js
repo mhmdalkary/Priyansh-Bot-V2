@@ -1,5 +1,5 @@
 module.exports.config = {
-	name: "kick",
+	name: "اضربه",
 	version: "1.0.1", 
 	hasPermssion: 1,
 	credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭",
@@ -15,10 +15,10 @@ module.exports.languages = {
 		"needPermssion": "Cần quyền quản trị viên nhóm\nVui lòng thêm và thử lại!",
 		"missingTag": "Bạn phải tag người cần kick"
 	},
-	"en": {
-		"error": "Error! An error occurred. Please try again later!",
-		"needPermssion": "Need group admin\nPlease add and try again!",
-		"missingTag": "You need tag some person to kick"
+	"ar": {
+		"error": "خطأ! حدث خطأ. يُرجى المحاولة لاحقًا. !",
+		"needPermssion": "بحاجة إلى مسؤول المجموعة \nمن فضلك أضف وحاول مرة أخرى! ",
+		"missingTag": "تحتاج إلى وضع علامة على شخص ما لركله "
 	}
 }
 
