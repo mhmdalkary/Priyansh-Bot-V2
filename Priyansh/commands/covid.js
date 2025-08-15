@@ -1,5 +1,5 @@
 ﻿module.exports.config = {
-  name: "covid",
+  name: "كورونا",
   version: "1.0.0",
   hasPermssion: 0,
   credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭",
@@ -20,7 +20,7 @@ module.exports.run = async (
   const request = require('request');
   const fs = require("fs");
   var tip = args.join(" ");
-  if (!tip) return api.sendMessage(`Enter a country 🌎 name`, event.threadID, event.messageID);
+  if (!tip) return api.sendMessage(`أدخل اسم البلد 🌎 `, event.threadID, event.messageID);
   else
   {
     axios.get(`https://disease.sh/v3/covid-19/countries/${encodeURIComponent(tip)}`).then(res =>
@@ -36,7 +36,7 @@ module.exports.run = async (
       {
         api.sendMessage(
         {
-          body: `🌎Country : ${quocgia}\n\n🦠Infection: ${nhiem}\n☠️Death: ${chet} \n❤️Treatment : ${dieutri}\n📝Population : ${danso}\n🔎Continent: ${chauluc}\n`,
+          body: `🌎دولة  : ${quocgia}\n\n🦠عدوى : ${nhiem}\n☠️موت : ${chet} \n❤️علاج  : ${dieutri}\n📝سكان  : ${danso}\n🔎القارة : ${chauluc}\n`,
           attachment: fs.createReadStream(__dirname + `/cache/covidtk.png`)
         }, event.threadID, () => fs.unlinkSync(__dirname + `/cache/covidtk.png`), event.messageID);
       };
