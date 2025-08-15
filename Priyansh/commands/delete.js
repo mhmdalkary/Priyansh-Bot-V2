@@ -72,7 +72,7 @@ module.exports.run = async function ({ event, api, args, Currencies }) {
     var one = senderID, two = mention[0];
   await Currencies.increaseMoney(event.senderID, parseInt(hc*rd));
   
-  if (!two) return api.sendMessage("Please tag 1 person", threadID, messageID);
+  if (!two) return api.sendMessage("الرجاء سوي تاغ", threadID, messageID);
   else {
         return makeImage({ one, two }).then(path => api.sendMessage({ body: `أريد حذف هذا  🖱️`, attachment: fs.createReadStream(path)}, threadID, () => fs.unlinkSync(path), messageID));
   }
