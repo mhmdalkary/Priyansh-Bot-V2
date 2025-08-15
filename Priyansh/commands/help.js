@@ -15,7 +15,7 @@ module.exports.config = {
 
 module.exports.languages = {  
 	"ar": {  
-		"moduleInfo": "»======『📜 تفاصيل الأمر 📜』======«\n⊹ 『الاسم』: %1\n⊹ 『الوصف』: %2\n⊹ 『الاستخدام』: %3\n⊹ 『الفئة』: %4\n⊹ 『وقت الانتظار』: %5 ثانية\n⊹ 『الصلاحية』: %6\n⊹ 『الكود بواسطة』: %7\n\n➤ مثال:\n  %3\n»================================«",  
+		"moduleInfo": "»====『 تفاصيل الأمر 』====«\n⊹ 『الاسم』: %1\n⊹ 『الوصف』: %2\n⊹ 『الاستخدام』: %3\n⊹ 『الفئة』: %4\n⊹ 『وقت الانتظار』: %5 ثانية\n⊹ 『الصلاحية』: %6\n⊹ 『الكود بواسطة』: %7\n\n➤ مثال:\n  %3\n»================================«",  
 		"helpList": '[ يوجد %1 أوامر في البوت، استخدم: "%2اوامر اسم_الأمر" لمعرفة طريقة الاستعمال! ]',  
 		"user": "مستخدم",  
         "adminGroup": "ادمن المجموعة",  
@@ -52,7 +52,7 @@ module.exports.run = async function({ api, event, args, getText }) {
 	if (!command) {  
 		const arrayInfo = [];  
 		const page = parseInt(args[0]) || 1;  
-		const numberOfOnePage = 30;  
+		const numberOfOnePage = 50;  
 		let i = 0;  
 		let msg = "";  
 
@@ -65,7 +65,7 @@ module.exports.run = async function({ api, event, args, getText }) {
 
 		for (let item of returnArray) msg += `⊹ 『${++i}』 ${prefix}${item}\n`;  
 
-		const header = `»======『قائمة الاوامر』======«\n➤ عدد الأوامر: ${arrayInfo.length}\n➤ اكتب: ${prefix}اوامر [اسم_الأمر] لعرض التفاصيل ⊹\n\n`;  
+		const header = `»===『قائمة الاوامر』===«\n➤ عدد الأوامر: ${arrayInfo.length}\n➤ اكتب: ${prefix}اوامر [اسم_الأمر] لعرض التفاصيل ⊹\n\n`;  
 		const footer = `\n» الصفحة (${page}/${Math.ceil(arrayInfo.length/numberOfOnePage)}) «`;  
 
 		api.sendMessage(header + msg + footer, threadID, (err, info) => {  
@@ -91,7 +91,7 @@ module.exports.handleReply = function({ api, event }) {
 	const returnArray = data.arrayInfo.slice(i, i + data.numberOfOnePage);  
 	for (let item of returnArray) msg += `⊹ 『${++i}』 ${data.prefix}${item}\n`;  
 
-	const header = `»======『قائمة الاوامر』======«\n➤ عدد الأوامر: ${data.arrayInfo.length}\n➤ اكتب: ${data.prefix}اوامر [اسم_الأمر] لعرض التفاصيل ⊹\n\n`;  
+	const header = `»===『قائمة الاوامر』===«\n➤ عدد الأوامر: ${data.arrayInfo.length}\n➤ اكتب: ${data.prefix}اوامر [اسم_الأمر] لعرض التفاصيل ⊹\n\n`;  
 	const footer = `\n» الصفحة (${newPage}/${totalPages}) «`;  
 
 	api.editMessage(header + msg + footer, data.messageID, threadID);  
