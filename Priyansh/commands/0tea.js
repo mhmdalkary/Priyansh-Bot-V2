@@ -12,7 +12,7 @@ module.exports.config = {
 
 module.exports.handleEvent = function({ api, event, client, __GLOBAL }) {
   var { threadID, messageID } = event;
-  const triggers = ["شاي", "قهوة"];
+  const triggers = ["شاي", "قهوة" , "وسكي"];
   const text = event.body.toLowerCase();
 
   if (triggers.some(t => text.startsWith(t))) {
