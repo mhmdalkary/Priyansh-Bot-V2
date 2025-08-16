@@ -1,49 +1,25 @@
 module.exports.config = {
   name: "تخيل",
-  version: "1.0.1",
+  version: "1.0.",
   hasPermssion: 0,
-  credits: "Priyansh Rajput (تعديل محمد)",
-  description: "توليد صورة من وصف",
+  credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭",
+  description: "generate image from polination",
   commandCategory: "image",
-  usages: "تخيل [الوصف]",
+  usages: "query",
   cooldowns: 2,
 };
-
-module.exports.run = async ({ api, event, args }) => {
-  const axios = require("axios");
-  const fs = require("fs-extra");
-  const translate = require("@vitalets/google-translate-api");
-  
-  let { threadID, messageID } = event;
+module.exports.run = async ({api, event, args }) => {
+const axios = require('axios');
+const fs = require('fs-extra');
+ let { threadID, messageID } = event;
   let query = args.join(" ");
-  if (!query) return api.sendMessage("✏️ اكتب وصف للصورة", threadID, messageID);
-
-  try {
-    // لو النص عربي يترجم للانجليزي
-    const arabicRegex = /[\u0600-\u06FF]/;
-    if (arabicRegex.test(query)) {
-      let translated = await translate(query, { to: "en" });
-      query = translated.text;
-    }
-
-    let path = __dirname + `/cache/poli.png`;
-    const poli = (
-      await axios.get(`https://image.pollinations.ai/prompt/${encodeURIComponent(query)}`, {
-        responseType: "arraybuffer",
-      })
-    ).data;
-
-    fs.writeFileSync(path, Buffer.from(poli, "utf-8"));
-    api.sendMessage(
-      {
-        body: `🖼️ صورة متولدة من الوصف:\n"${query}"`,
-        attachment: fs.createReadStream(path),
-      },
-      threadID,
-      () => fs.unlinkSync(path),
-      messageID
-    );
-  } catch (e) {
-    api.sendMessage("⚠️ حصل خطأ: " + e.message, threadID, messageID);
-  }
+  if (!query) return api.sendMessage("اكتب وصف", threadID, messageID);
+let path = __dirname + `/cache/poli.png`;
+  const poli = (await axios.get(`https://image.pollinations.ai/prompt/${query}`, {
+    responseType: "arraybuffer",
+  })).data;
+  fs.writeFileSync(path, Buffer.from(poli, "utf-8"));
+  api.sendMessage({
+    body: `“${query}” 𝗜𝗺𝗮𝗴𝗲 𝗚𝗲𝗻𝗲𝗿𝗮𝘁𝗲𝗱`,
+    attachment: fs.createReadStream(path) }, threadID, () => fs.unlinkSync(path), messageID);
 };
