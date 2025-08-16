@@ -33,8 +33,19 @@ module.exports.handleEvent = function ({ api, event, getText }) {
   const threadSetting = global.data.threadData.get(parseInt(threadID)) || {};    
   const command = commands.get(splitBody[1].toLowerCase());    
   const prefix = (threadSetting.hasOwnProperty("PREFIX")) ? threadSetting.PREFIX : global.config.PREFIX;    
-  return api.sendMessage(getText("moduleInfo", command.config.name, command.config.description, `${prefix}${command.config.name} ${(command.config.usages) ? command.config.usages : ""}`, command.config.commandCategory, command.config.cooldowns, 
-    ((command.config.hasPermssion == 0) ? getText("user") : (command.config.hasPermssion == 1) ? getText("adminGroup") : getText("adminBot")), command.config.credits), threadID, messageID);
+  
+  const permissionLevel = command.config.hasPermssion;
+
+  let permissionText = '';
+  if (permissionLevel === 0) {
+    permissionText = getText("user");
+  } else if (permissionLevel === 1) {
+    permissionText = getText("adminGroup");
+  } else if (permissionLevel === 2) {
+    permissionText = getText("adminBot");
+  }
+  
+  return api.sendMessage(getText("moduleInfo", command.config.name, command.config.description, `${prefix}${command.config.name} ${(command.config.usages) ? command.config.usages : ""}`, command.config.commandCategory, command.config.cooldowns, permissionText, command.config.credits), threadID, messageID);
 }
 
 module.exports.run = function({ api, event, args, getText }) {
@@ -76,6 +87,15 @@ module.exports.run = function({ api, event, args, getText }) {
     }, event.messageID);    
   }    
 
-  return api.sendMessage(getText("moduleInfo", command.config.name, command.config.description, `${prefix}${command.config.name} ${(command.config.usages) ? command.config.usages : ""}`, command.config.commandCategory, command.config.cooldowns, 
-    ((command.config.hasPermssion == 0) ? getText("user") : (command.config.hasPermssion == 1) ? getText("adminGroup") : getText("adminBot")), command.config.credits), threadID, messageID);
+  const permissionLevel = command.config.hasPermssion;
+  let permissionText = '';
+  if (permissionLevel === 0) {
+    permissionText = getText("user");
+  } else if (permissionLevel === 1) {
+    permissionText = getText("adminGroup");
+  } else if (permissionLevel === 2) {
+    permissionText = getText("adminBot");
+  }
+
+  return api.sendMessage(getText("moduleInfo", command.config.name, command.config.description, `${prefix}${command.config.name} ${(command.config.usages) ? command.config.usages : ""}`, command.config.commandCategory, command.config.cooldowns, permissionText, command.config.credits), threadID, messageID);
 };
