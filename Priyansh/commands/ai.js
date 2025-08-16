@@ -4,7 +4,6 @@ const path = require("path");
 
 const maxStorageMessage = 50;
 const PROMPT_FILE = path.join(__dirname, "../data/luna_prompt.json");
-
 const DEVELOPER_ID = "100087632392287";
 
 if (!global.temp.mistralHistory) global.temp.mistralHistory = {};
@@ -13,6 +12,22 @@ const { mistralHistory } = global.temp;
 const defaultPrompt = `أنت لونا، فتاة ذكية، هادئة، وردودك مختصرة وواضحة  
 تتكلمين بأسلوب واثق وفيه لمسة ودية وسخرية لطيفة أحيانًا  
 تحبين التحليل العميق بدون حشو وتعرفين تعبرين عن رأيك بثقة`;
+
+module.exports.config = {
+    name: "لونا",
+    aliases: ["لو", "ذكاء", "ai"],
+    version: "2.5",
+    role: 0,
+    countDown: 2,
+    credits: "إيهاب",
+    description: "لونا - ذكاء اصطناعي متقدم",
+    commandCategory: "ai",
+    usages: "[ask]",
+    cooldowns: 2,
+    dependecies: {
+        "axios": "1.4.0"
+    }
+};
 
 function loadPrompt() {
   try {
@@ -59,83 +74,74 @@ async function generateResponse(userId, query) {
   return res.data.response;
 }
 
-function handleSpecialCommands({ args, event, message }) {
+function handleSpecialCommands({ args, event, api }) {
   if (args[0]?.toLowerCase() === "برومبت") {
-    if (event.senderID !== DEVELOPER_ID) return message.reply("❌ | فقط المطور يمكنه تعديل البرومبت.");
+    if (event.senderID !== DEVELOPER_ID) return api.sendMessage("❌ | فقط المطور يمكنه تعديل البرومبت.", event.threadID, event.messageID);
     const newPrompt = args.slice(1).join(" ").trim();
-    if (!newPrompt) return message.reply("❌ | اكتب البرومبت بعد الأمر.");
-    if (newPrompt.length > 1000) return message.reply("❌ | البرومبت طويل جدًا.");
+    if (!newPrompt) return api.sendMessage("❌ | اكتب البرومبت بعد الأمر.", event.threadID, event.messageID);
+    if (newPrompt.length > 1000) return api.sendMessage("❌ | البرومبت طويل جدًا.", event.threadID, event.messageID);
     if (savePrompt(newPrompt)) {
       currentPrompt = newPrompt;
       mistralHistory[event.senderID] = [];
-      return message.reply("✅ | تم تحديث شخصية لونا.");
+      return api.sendMessage("✅ | تم تحديث شخصية لونا.", event.threadID, event.messageID);
     }
-    return message.reply("❌ | خطأ أثناء الحفظ.");
+    return api.sendMessage("❌ | خطأ أثناء الحفظ.", event.threadID, event.messageID);
   }
 
   if (args[0]?.toLowerCase() === "تعيين") {
     mistralHistory[event.senderID] = [];
-    return message.reply("✅ | تم مسح المحادثة.");
+    return api.sendMessage("✅ | تم مسح المحادثة.", event.threadID, event.messageID);
   }
   return null;
 }
 
-module.exports = {
-  config: {
-    name: "لونا",
-    aliases: ["لو", "ذكاء", "ai"],
-    version: "2.5",
-    role: 0,
-    countDown: 5,
-    author: "إيهاب",
-    shortDescription: { ar: "دردشة مع لونا" },
-    longDescription: { ar: "تحدث مع لونا بأسلوبها الذكي والواثق" },
-    category: "الذكاء AI",
-    guide: { ar: "{pn} <رسالتك>\nمثال: {pn} كيف حالك؟" },
-  },
+module.exports.run = async function ({ api, event, args, Users }) {
+  const { threadID, messageID, senderID } = event;
+  const query = args.join(" ");
 
-  onStart: async ({ args, message, event }) => {
-    if (!args.length) return message.reply("⚠️ | اكتب سؤالك بعد الأمر.");
-    const special = handleSpecialCommands({ args, event, message });
-    if (special) return;
+  if (!args[0]) return api.sendMessage("⚠️ | اكتب سؤالك بعد الأمر.", threadID, messageID);
+  
+  // Handle special commands
+  const special = handleSpecialCommands({ args, event, api });
+  if (special) return;
 
-    const query = args.join(" ");
-    if (query.length > 1250) return message.reply("❌ | النص طويل جدًا.");
-    if (["من انت", "ما اسمك", "من صنعك", "مطورك"].some(k => query.includes(k)))
-      return message.reply("أنا لونا، مجرد عقل ذكي يساعدك");
+  if (query.length > 1250) return api.sendMessage("❌ | النص طويل جدًا.", threadID, messageID);
+  if (["من انت", "ما اسمك", "من صنعك", "مطورك"].some(k => query.includes(k)))
+    return api.sendMessage("أنا لونا، مجرد عقل ذكي يساعدك", threadID, messageID);
 
+  api.sendMessage("⌛ | جاري البحث عن إجابة، انتظر من فضلك...", threadID, messageID);
+
+  try {
+    api.setMessageReaction("⌛", messageID, () => { }, true);
+    const response = await generateResponse(senderID, query);
+    api.sendMessage(`＊/ ${response}`, threadID, messageID);
+    api.setMessageReaction("✅", messageID, () => { }, true);
+  } catch (error) {
+    console.error('Error:', error);
+    api.sendMessage("❌ | حدث خطأ أثناء جلب البيانات. يرجى المحاولة لاحقًا.", threadID, messageID);
+  }
+};
+
+module.exports.onMessage = async ({ event, api }) => {
+  if (!event.body) return;
+  if (event.body.toLowerCase().includes("لونا")) {
     try {
-      const response = await generateResponse(event.senderID, query);
-      return message.reply(`＊/ ${response}`);
-    } catch {
-      return message.reply("❌ | الخادم مشغول، حاول لاحقًا.");
+      const response = await generateResponse(event.senderID, event.body);
+      return api.sendMessage(`＊/ ${response}`, event.threadID, event.messageID);
+    } catch (error) {
+      console.error('Error:', error);
     }
-  },
+  }
+};
 
-  onMessage: async ({ event, message }) => {
-    if (!event.body) return;
-    if (event.body.toLowerCase().includes("لونا")) {
-      try {
-        const response = await generateResponse(event.senderID, event.body);
-        return message.reply(`＊/ ${response}`);
-      } catch {}
-    }
-  },
-
-  onReply: async ({ args, event, message, Reply }) => {
-    if (event.senderID !== Reply.author) return;
-    const special = handleSpecialCommands({ args, event, message });
-    if (special) return;
-
-    if (!args.length) return message.reply("⚠️ | اكتب سؤالك بعد الأمر.");
-    const query = args.join(" ");
-    if (query.length > 1250) return message.reply("❌ | النص طويل جدًا.");
-
-    try {
-      const response = await generateResponse(event.senderID, query);
-      return message.reply(`＊/ ${response}`);
-    } catch {
-      return message.reply("❌ | الخادم مشغول، حاول لاحقًا.");
-    }
-  },
+module.exports.onReply = async ({ event, api, Reply }) => {
+  if (event.senderID !== Reply.author) return;
+  
+  try {
+    const response = await generateResponse(event.senderID, event.body);
+    return api.sendMessage(`＊/ ${response}`, event.threadID, event.messageID);
+  } catch (error) {
+    console.error('Error:', error);
+    return api.sendMessage("❌ | الخادم مشغول، حاول لاحقًا.", event.threadID, event.messageID);
+  }
 };
