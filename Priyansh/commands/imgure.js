@@ -4,7 +4,7 @@ const fs = require("fs");
 const { downloadFile } = require("../../utils/index.js");
 
 module.exports.config = {
-  name: "imgur",
+  name: "رابط",
   version: "2.0.0",
   hasPermssion: 0,
   credits: "Priyansh Rajput",
@@ -18,7 +18,7 @@ module.exports.run = async ({ api, event }) => {
   const { threadID, type, messageReply, messageID } = event;
 
   if (type !== "message_reply" || !messageReply.attachments.length) {
-    return api.sendMessage("⚠ Reply to an image/video to upload!", threadID, messageID);
+    return api.sendMessage("⚠ الرد على الصورة/الفيديو لتحميله! ", threadID, messageID);
   }
 
   const attachmentSend = [];
@@ -54,7 +54,7 @@ module.exports.run = async ({ api, event }) => {
 
       return res.data.urls || [];
     } catch (err) {
-      console.error("❌ Upload failed:", err.response?.data || err.message);
+      console.error("❌ فشل التحميل: ", err.response?.data || err.message);
       return [];
     }
   }
@@ -71,8 +71,8 @@ module.exports.run = async ({ api, event }) => {
   // Send result
   if (links.length > 0) {
     const msg = links.map(link => `✅ ${link}`).join("\n");
-    return api.sendMessage(`🚀 Uploaded ${links.length} file(s) to Imgur:\n${msg}`, threadID, messageID);
+    return api.sendMessage(`🚀 تم تحميل  ${links.length} ملفات إلى رابط:\n${msg}`, threadID, messageID);
   } else {
-    return api.sendMessage("❌ Upload failed.", threadID, messageID);
+    return api.sendMessage("❌ فشل التحميل", threadID, messageID);
   }
 };
