@@ -1,91 +1,95 @@
-module.exports.config = {  
-  name: "ألبوم",  
-  version: "1.1.0",  
-  hasPermssion: 0,  
-  credits: "ترجمة وتعديل محمد",  
-  description: "بحث صور من جوجل",  
-  commandCategory: "صور",  
-  usages: "ألبوم [كلمة]",  
-  cooldowns: 5,  
-  dependencies: {  
-     "axios":"",  
-     "fs-extra":"",  
-     "googlethis":"",  
-     "cloudscraper":""  
-  }  
-};  
+module.exports.config = {
 
-let cacheResults = {};  
+  name: "ألبوم",
+  version: "1.0.0",
+  hasPermssion: 0,
+  credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭",
+  description: "Search an Image",
+  commandCategory: "image",
+  usages: "ألبوم [text]",
+  cooldowns: 5,
+  dependencies: {
 
-module.exports.run = async ({ event, api, args }) => {  
-  const google = global.nodemodule["googlethis"];  
-  const cloudscraper = global.nodemodule["cloudscraper"];  
-  const fs = global.nodemodule["fs-extra"];  
+     "axios":"",
+     "fs-extra":"",
+    "googlethis":"",
+        "cloudscraper":""
+  }
+};
 
-  try {  
-    let query = (event.type == "message_reply") ? event.messageReply.body : args.join(" ");  
-    if(!query) return api.sendMessage("⚠️ اكتب كلمة للبحث عن صور", event.threadID, event.messageID);  
 
-    api.sendMessage(`🔎 جاري البحث عن "${query}" ...`, event.threadID, event.messageID);  
 
-    let result = await google.image(query, { safe: false });  
-    if(result.length === 0) return api.sendMessage(`❌ ماكو نتائج للبحث "${query}"`, event.threadID, event.messageID);  
 
-    // خزن النتائج عشان نستخدمها بالدُفعات  
-    cacheResults[event.threadID] = { query, result, index: 0 };  
+module.exports.run = async ({matches, event, api, extra, args}) => {
 
-    sendBatch(event.threadID, event.messageID, api);  
+    const axios = global.nodemodule['axios'];
+    const google = global.nodemodule["googlethis"];
+const cloudscraper = global.nodemodule["cloudscraper"];
+const fs = global.nodemodule["fs"];
+try{
+var query = (event.type == "message_reply") ? event.messageReply.body : args.join(" ");
+  //let query = args.join(" ");
+  api.sendMessage(`🔎 البحث عن  ${query}...`, event.threadID, event.messageID);
 
-  } catch (e) {  
-    console.log("ERR: " + e);  
-    api.sendMessage("⚠️ خطأ: " + e, event.threadID, event.messageID);  
-  }  
-};  
+  let result = await google.image(query, {safe: false});
+  if(result.length === 0) {
+    api.sendMessage(`⚠️ لم يتم العثور على أية نتيجة من خلال بحثك عن الصور. `, event.threadID, event.messageID)
+    return;
+  }
 
-async function sendBatch(threadID, messageID, api) {  
-  const cloudscraper = global.nodemodule["cloudscraper"];  
-  const fs = global.nodemodule["fs-extra"];  
+  let streams = [];
+  let counter = 0;
 
-  if(!cacheResults[threadID]) return;  
-  let { query, result, index } = cacheResults[threadID];  
+  console.log(result)
 
-  let streams = [];  
-  let count = 0;  
+  for(let image of result) {
+    // Only show 6 images
+    if(counter >= 10)
+      break;
 
-  for(let i = index; i < result.length && count < 6; i++) {  
-    let url = result[i].url;  
-    if(!url.endsWith(".jpg") && !url.endsWith(".png")) continue;  
+    console.log(`${counter}: ${image.url}`);
 
-    let path = __dirname + `/cache/search-${threadID}-${i}.jpg`;  
-    try {  
-      let buffer = await cloudscraper.get({ uri: url, encoding: null });  
-      fs.writeFileSync(path, buffer);  
-      streams.push(fs.createReadStream(path).on("end", () => fs.unlinkSync(path)));  
-      count++;  
-    } catch (e) {  
-      console.log("تحميل فشل: " + e);  
-    }  
-  }  
+    // Ignore urls that does not ends with .jpg or .png
+    let url = image.url;
+    if(!url.endsWith(".jpg") && !url.endsWith(".png"))
+      continue;
 
-  if(streams.length == 0) return api.sendMessage("❌ ما قدرت ارسل صور بهذي الدفعة", threadID, messageID);  
+   let path = __dirname + `/cache/search-image-${counter}.jpg`;
+    let hasError = false;
+    await cloudscraper.get({uri: url, encoding: null})
+      .then((buffer) => fs.writeFileSync(path, buffer))
+      .catch((error) => {
+        console.log(error)
+        hasError = true;
+      });
 
-  cacheResults[threadID].index += count;  
+    if(hasError)
+      continue;
 
-  let msg = {  
-    body: `📸 نتائج بحث: "${query}"\nدفعة جديدة (${cacheResults[threadID].index}/${result.length})\n\nاعمل 👍 لاكمال الدفعة الجاية`,  
-    attachment: streams  
-  };  
+    console.log(`Pushed to streams: ${path}`) ;
+    streams.push(fs.createReadStream(path).on("end", async () => {
+      if(fs.existsSync(path)) {
+        fs.unlink(path, (err) => {
+          if(err) return console.log(err);
 
-  api.sendMessage(msg, threadID, (err, info) => {  
-    if(!err) cacheResults[threadID].lastMsgID = info.messageID;  
-  }, messageID);  
-}  
+          console.log(`Deleted file: ${path}`);
+        });
+      }
+    }));
 
-module.exports.handleReaction = ({ event, api }) => {  
-  if(event.reaction != "👍") return;  
-  let data = cacheResults[event.threadID];  
-  if(!data) return;  
-  if(event.messageID != data.lastMsgID) return;  
+    counter += 1;
+  }
 
-  sendBatch(event.threadID, event.messageID, api);  
+  api.sendMessage("⏳ إرسال نتيجة البحث ...", event.threadID, event.messageID)
+
+  let msg = {
+    body: `--------------------\nنتيجة بحث الصورة \n"${query}"\n\لقيته:: ${result.length} صورة${result.length > 1 ? 's' : ''}\nعرض فقط: 10 صور \n\n--------------------`,
+    attachment: streams
+  };
+
+  api.sendMessage(msg, event.threadID, event.messageID);
+}catch(e){
+  console.log("ERR: "+e)
+  api.sendMessage("⚠️ERR: "+e, event.threadID, event.messageID);
+}
 };
