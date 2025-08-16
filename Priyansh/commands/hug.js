@@ -1,11 +1,11 @@
 module.exports.config = {
     name: "حضن",
-    version: "3.1.1",
+    version: "3.1.2",
     hasPermssion: 0,
-    credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭",
+    credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭 | تعديل محمد",
     description: "Hug 🥰",
     commandCategory: "img",
-    usages: "[@mention]",
+    usages: "[@mention] او رد على رسالة",
     cooldowns: 5,
     dependencies: {
         "axios": "",
@@ -66,9 +66,23 @@ module.exports.run = async function ({ event, api, args }) {
     const fs = global.nodemodule["fs-extra"];
     const { threadID, messageID, senderID } = event;
     const mention = Object.keys(event.mentions);
-    if (!mention[0]) return api.sendMessage("يرجى ذكره في تاغ 😔", threadID, messageID);
-    else {
-        const one = senderID, two = mention[0];
-        return makeImage({ one, two }).then(path => api.sendMessage({ body: "", attachment: fs.createReadStream(path) }, threadID, () => fs.unlinkSync(path), messageID));
+
+    let one = senderID, two;
+
+    // بحالة التاغ
+    if (mention[0]) {
+        two = mention[0];
+    } 
+    // بحالة الرد على رسالة
+    else if (event.type == "message_reply") {
+        two = event.messageReply.senderID;
     }
-      }
+    // لا تاغ ولا رد
+    else {
+        return api.sendMessage("يرجى ذكره في تاغ او رد على رسالته 😔", threadID, messageID);
+    }
+
+    return makeImage({ one, two }).then(path => 
+        api.sendMessage({ body: "", attachment: fs.createReadStream(path) }, threadID, () => fs.unlinkSync(path), messageID)
+    );
+}
