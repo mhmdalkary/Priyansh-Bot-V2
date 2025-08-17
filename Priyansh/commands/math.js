@@ -1,5 +1,5 @@
 module.exports.config = {
-	name: "math",
+	name: "احسبي",
 	version: "1.0.1",
 	hasPermssion: 0,
 	credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭",
@@ -54,7 +54,7 @@ module.exports.run = async function ({ api, event, args }) {
 	var out = (msg) => api.sendMessage(msg, threadID, messageID);
 	var text = [], key = global.configModule.math.WOLFRAM;
 	var content = (event.type == 'message_reply') ? event.messageReply.body : args.join(" ");
-	if (!content) return out("Please enter the calculation");
+	if (!content) return out("الرجاء إدخال الحساب ");
 	else if (content.indexOf("-p") == 0) {
 		try {
 			content = "primitive " + content.slice(3, content.length);
