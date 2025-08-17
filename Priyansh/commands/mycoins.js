@@ -1,6 +1,6 @@
 module.exports.config = {
 	name: "رصيدي",
-	version: "1.0.1",
+	version: "1.0.2",
 	hasPermssion: 0,
 	credits: "Lona",
 	description: "يعرض رصيدك او رصيد شخص معلم او اللي رديت على رسالته",
@@ -46,9 +46,13 @@ module.exports.run = async function({ api, event, args, Currencies, getText }) {
 	// اذا رد على رسالة
 	else if (messageReply) {
 		var uid = messageReply.senderID;
-		var name = messageReply.body || "هذا الشخص";
 		var money = (await Currencies.getData(uid)).money;
 		if (!money) money = 0;
+
+		// نجيب اسم الشخص من معلومات المستخدم
+		const userInfo = await api.getUserInfo(uid);
+		const name = userInfo[uid].name || "هذا الشخص";
+
 		return api.sendMessage(getText("sotiennguoikhac", name, money), threadID, messageID);
 	}
 };
