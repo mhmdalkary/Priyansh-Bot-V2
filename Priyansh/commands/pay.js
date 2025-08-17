@@ -1,34 +1,24 @@
 module.exports.config = {
-    name: "pay",
+    name: "تحويل",
     version: "1.0.1",
     hasPermssion: 0,
-    credits: "Mirai Team",
-    description: "Chuyển tiền cho người khác",
-    commandCategory: "economy",
-    usages: "[tag người dùng] [Số tiền cần chuyển]",
+    credits: "Mirai Team (ترجمه للعربي بواسطة ChatGPT)",
+    description: "تحويل رصيد لشخص ثاني",
+    commandCategory: "الاقتصاد",
+    usages: "تحويل [منشن المستخدم] [المبلغ]",
     cooldowns: 5
 };
 
 module.exports.languages = {
-    "vi": {
-        "missingTag": "[ PAY ] Bạn phải tag người cần chuyển tiền",
-        "overTagLength": "[ PAY ] Vui lòng chỉ tag một người duy nhất",
-        "userNotExist": "[ PAY ] Người dùng bạn cần chuyển không tồn tại trong hệ thống!",
-        "invalidInput": "[ PAY ] Số tiền bạn nhập không phù hợp để chuyển",
-        "payerNotExist": "[ PAY ] Hiện tại bạn không tồn tại trong hệ thống, vui lòng chờ 5 giây sau đó thử lại",
-        "notEnoughMoney": "[ PAY ] Bạn không đủ tiền để thực hiện giao dịch!",
-        "paySuccess": "[ PAY ] Đã chuyển thành công %1$ (15% tax) cho người dùng: %2",
-        "error": "[ PAY ] Đã xảy ra lỗi không mong muốn trong lúc thực hiện giao dịch"
-    },
-    "en": {
-        "missingTag": "[ PAY ] No recipient tagged.",
-        "overTagLength": "[ PAY ] You have to tag at no more than one recipient.",
-        "userNotExist": "[ PAY ] Invalid recipient(s).",
-        "invalidInput": "[ PAY ] Invailid amount.",
-        "payerNotExist": "[ PAY ] Please wait 5 seconds to be fully registered as right now you are not a member yet.",
-        "notEnoughMoney": "[ PAY ] Insufficient fund. Please check your amount.",
-        "paySuccess": "[ PAY ] Successfully transfered %1$ to %2 (15% tax included)",
-        "error": "[ PAY ] Unknown error occured, please contact administrator."
+    "ar": {
+        "missingTag": "[ تحويل ] لازم تعمل منشن للشخص اللي تبي تحول له",
+        "overTagLength": "[ تحويل ] تقدر تعمل منشن لشخص واحد فقط",
+        "userNotExist": "[ تحويل ] الشخص اللي حاولت تحول له مو موجود بالنظام",
+        "invalidInput": "[ تحويل ] المبلغ اللي دخلته غير صالح",
+        "payerNotExist": "[ تحويل ] انت مو مسجل بالنظام بعد، انتظر 5 ثواني وجرب مرة ثانية",
+        "notEnoughMoney": "[ تحويل ] رصيدك غير كافي للتحويل",
+        "paySuccess": "[ تحويل ] تم تحويل %1$ (مع خصم 15٪ ضريبة) للمستخدم: %2",
+        "error": "[ تحويل ] صار خطأ غير متوقع وقت العملية"
     }
 }
 
