@@ -1,109 +1,27 @@
-const fs = require("fs-extra");
-const path = require("path");
-const axios = require("axios");
-const jimp = require("jimp");
+module.exports.run = async function ({ event, api, args }) {
+const fs = global.nodemodule["fs-extra"];
+const { threadID, messageID, senderID } = event;
+const mention = Object.keys(event.mentions);
+if (!mention[0]) return api.sendMessage("سوي تاغ ولا للعشوائيات 💔", threadID, messageID);
+else {
+const one = senderID, two = mention[0];
 
-module.exports.config = {
-    name: "زوجيني",
-    version: "3.2",
-    hasPermssion: 0,
-    credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭 | تعديل محمد",
-    description: "married with gender match and compatibility",
-    commandCategory: "img",
-    usages: "[@mention/reply]",
-    cooldowns: 5,
-    dependencies: {
-        "axios": "",
-        "fs-extra": "",
-        "path": "",
-        "jimp": ""
-    }
-};
+// نسبة توافق عشوائية من 0 لـ 100
+const compatibility = Math.floor(Math.random() * 101);
 
-module.exports.onLoad = async() => {
-    const { resolve } = global.nodemodule["path"];
-    const { existsSync, mkdirSync } = global.nodemodule["fs-extra"];
-    const { downloadFile } = global.utils;
-    const dirMaterial = __dirname + `/cache/canvas/`;
-    const pathImg = resolve(__dirname, 'cache/canvas', 'married.png');
-    if (!existsSync(dirMaterial)) mkdirSync(dirMaterial, { recursive: true });
-    if (!existsSync(pathImg)) await downloadFile("https://i.imgur.com/txnRTKf.png", pathImg);
+// نصوص رومانسية متنوعة
+const texts = [
+`💍 تم الزواج بينكم بنجاح! نسبة التوافق بينكم هي ${compatibility}% 💖`,
+`🎉 ألف مبروك! أنتما الآن زوجين رسميين بنسبة توافق ${compatibility}% 🌹`,
+`💑 الحب فاز! نسبة توافقكم الجميلة: ${compatibility}% 💕`,
+`✨ تم توحيد القلوب! التوافق بينكم وصل لـ ${compatibility}% 😍`
+];
+
+// اختيار نص عشوائي
+const finalText = texts[Math.floor(Math.random() * texts.length)];
+
+return makeImage({ one, two }).then(path => 
+api.sendMessage({ body: finalText, attachment: fs.createReadStream(path) }, threadID, () => fs.unlinkSync(path), messageID)
+);
 }
-
-async function circle(image) {
-    let img = await jimp.read(image);
-    img.circle();
-    return await img.getBufferAsync("image/png");
-}
-
-async function makeImage({ one, two }) {
-    const __root = path.resolve(__dirname, "cache", "canvas");
-    const batgiam_img = await jimp.read(__root + "/married.png");
-    const pathImg = __root + `/married_${one}_${two}.png`;
-    const avatarOne = __root + `/avt_${one}.png`;
-    const avatarTwo = __root + `/avt_${two}.png`;
-
-    // تحميل صور الفيسبوك
-    let getAvatarOne = (await axios.get(`https://graph.facebook.com/${one}/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`, { responseType: 'arraybuffer' })).data;
-    let getAvatarTwo = (await axios.get(`https://graph.facebook.com/${two}/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`, { responseType: 'arraybuffer' })).data;
-
-    fs.writeFileSync(avatarOne, Buffer.from(getAvatarOne, 'utf-8'));
-    fs.writeFileSync(avatarTwo, Buffer.from(getAvatarTwo, 'utf-8'));
-
-    const circleOne = await jimp.read(await circle(avatarOne));
-    const circleTwo = await jimp.read(await circle(avatarTwo));
-
-    batgiam_img.composite(circleOne.resize(170, 170), 1520, 210)
-                 .composite(circleTwo.resize(170, 170), 980, 300);
-
-    const raw = await batgiam_img.getBufferAsync("image/png");
-    fs.writeFileSync(pathImg, raw);
-    fs.unlinkSync(avatarOne);
-    fs.unlinkSync(avatarTwo);
-
-    return pathImg;
-}
-
-module.exports.run = async function ({ event, api, args, usersData }) {
-    const { threadID, messageID, senderID } = event;
-    let two, tag;
-
-    // التاغ
-    if (Object.keys(event.mentions).length > 0) {
-        two = Object.keys(event.mentions)[0];
-        tag = event.mentions[two].replace("@", "");
-    }
-    // الرد على رسالة
-    else if (event.type == "message_reply") {
-        two = event.messageReply.senderID;
-        tag = "الرد";
-    }
-    // العشوائي
-    else {
-        const threadInfo = await api.getThreadInfo(threadID);
-        const members = threadInfo.participantIDs.filter(id => id != senderID);
-        let senderData = await usersData.get(senderID);
-        let senderGender = senderData.gender; // 1 ذكر 2 انثى
-
-        // اختيار عشوائي حسب الجنس المختلف
-        for (let i = 0; i < 30; i++) {
-            const randomID = members[Math.floor(Math.random() * members.length)];
-            const data = await usersData.get(randomID);
-            if (data?.gender && data.gender !== senderGender) {
-                two = randomID;
-                tag = "شريك عشوائي";
-                break;
-            }
-        }
-        if (!two) return api.sendMessage("😢 لم أجد شريك مناسب حالياً", threadID, messageID);
-    }
-
-    // التوافق العشوائي
-    const lovePercent = Math.floor(Math.random() * 101);
-
-    const pathImg = await makeImage({ one: senderID, two });
-    return api.sendMessage({
-        body: `💒 تم الزواج مع ${tag} 💕\n❤️ نسبة التوافق: ${lovePercent}%`,
-        attachment: fs.createReadStream(pathImg)
-    }, threadID, () => fs.unlinkSync(pathImg), messageID);
 }
