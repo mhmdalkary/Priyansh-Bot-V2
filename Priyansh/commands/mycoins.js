@@ -1,24 +1,24 @@
 module.exports.config = {
-	name: "coin",
-	version: "1.0.2",
+	name: "رصيد",
+	version: "1.0.0",
 	hasPermssion: 0,
-	credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭",
-	description: "Check the amount of yourself or the person tagged",
-	commandCategory: "economy",
-	usages: "[Tag]",
+	credits: "Lona",
+	description: "يعرض رصيدك او رصيد شخص معلم عليه",
+	commandCategory: "اقتصاد",
+	usages: "[تاك]",
 	cooldowns: 5
 };
 
 module.exports.languages = {
-	"vi": {
-		"sotienbanthan": "Số tiền bạn đang có: %1$",
-		"sotiennguoikhac": "Số tiền của %1 hiện đang có là: %2$"
+	"ar": {
+		"sotienbanthan": "رصيدك الحالي: %1$",
+		"sotiennguoikhac": "رصيد %1 هو: %2$"
 	},
 	"en": {
 		"sotienbanthan": "Your current balance: %1$",
-		"sotiennguoikhac": "%1's current balance: %2$."
+		"sotiennguoikhac": "%1's current balance: %2$"
 	}
-}
+};
 
 module.exports.run = async function({ api, event, args, Currencies, getText }) {
 	const { threadID, messageID, senderID, mentions } = event;
@@ -35,11 +35,9 @@ module.exports.run = async function({ api, event, args, Currencies, getText }) {
 		return api.sendMessage({
 			body: getText("sotiennguoikhac", mentions[mention].replace(/\@/g, ""), money),
 			mentions: [{
-				tag: mentions[mention].replace(/\@/g, ""),
+				tag: mentions[mention],
 				id: mention
 			}]
 		}, threadID, messageID);
 	}
-
-	else return global.utils.throwError(this.config.name, threadID, messageID);
-}
+};
