@@ -1,11 +1,11 @@
 module.exports.config = {
-	name: "رصيد",
-	version: "1.0.0",
+	name: "رصيدي",
+	version: "1.0.1",
 	hasPermssion: 0,
 	credits: "Lona",
-	description: "يعرض رصيدك او رصيد شخص معلم عليه",
+	description: "يعرض رصيدك او رصيد شخص معلم او اللي رديت على رسالته",
 	commandCategory: "اقتصاد",
-	usages: "[تاك]",
+	usages: "[تاك او رد]",
 	cooldowns: 5
 };
 
@@ -21,14 +21,16 @@ module.exports.languages = {
 };
 
 module.exports.run = async function({ api, event, args, Currencies, getText }) {
-	const { threadID, messageID, senderID, mentions } = event;
+	const { threadID, messageID, senderID, mentions, messageReply } = event;
 
-	if (!args[0]) {
+	// اذا ماكو تاك ولا رد
+	if (!args[0] && !messageReply) {
 		const money = (await Currencies.getData(senderID)).money;
 		return api.sendMessage(getText("sotienbanthan", money), threadID, messageID);
 	}
 
-	else if (Object.keys(event.mentions).length == 1) {
+	// اذا تاك
+	else if (Object.keys(mentions).length == 1) {
 		var mention = Object.keys(mentions)[0];
 		var money = (await Currencies.getData(mention)).money;
 		if (!money) money = 0;
@@ -39,5 +41,14 @@ module.exports.run = async function({ api, event, args, Currencies, getText }) {
 				id: mention
 			}]
 		}, threadID, messageID);
+	}
+
+	// اذا رد على رسالة
+	else if (messageReply) {
+		var uid = messageReply.senderID;
+		var name = messageReply.body || "هذا الشخص";
+		var money = (await Currencies.getData(uid)).money;
+		if (!money) money = 0;
+		return api.sendMessage(getText("sotiennguoikhac", name, money), threadID, messageID);
 	}
 };
