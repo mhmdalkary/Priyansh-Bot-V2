@@ -1,138 +1,87 @@
-module.exports.config = {
-    name: "petmonsters",
-    version: "1.0.0",
-    hasPermssion: 0,
-    credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭",
-    description: "Sun bears are alone together :))",
-    commandCategory: "game",
-    usages: "-r/-s/-l/-p",
-    cooldowns: 0,
-    dependencies: {
-        "request":"",
-        "fs-extra":""
-    }
-};
-/*==================== MESSAGE ======================*/
-module.exports.run = ({ event, api, args, client, utils }) => {
-    if (!args[0]) {
-        api.sendMessage(`Please enter tags: -r/-s/-l/-p`, event.threadID);
-    } else {
-        switch(args[0]) {
-            case "-r": {
-            return api.sendMessage(
-                "Sign Up Success !!!\nBro officially became a coach"
-            , event.threadID, (error, info) => {
-                global.client.handleReply.push({
-                    name: this.config.name,
-                    messageID: info.messageID,
-                    author: event.senderID,
-                    type: "-r"
-                });
-            }, event.messageID);
-        }
-        case "-s": {
-            return api.sendMessage(
-                "==== SHOP PETMONSTERS ====\n1.FOOD\n2.WEAPONS\n3.Armor\n4.PET"
-            , event.threadID, (error, info) => {
-                global.client.handleReply.push({
-                    name: this.config.name,
-                    messageID: info.messageID,
-                    author: event.senderID,
-                    type: "-s"
-                });
-            }, event.messageID);
-        }
-        case "-l": {
-            return api.sendMessage(
-                "1.PET FIRE SYSTEM\n2.WATER SYSTEM PET\n3.EARTH SYSTEM PET\n4.PET SYSTEM\n5.PET LIGHT SYSTEM\n6.PET SHOWER SYSTEM"
-            , event.threadID, (error, info) => {
-                global.client.handleReply.push({
-                    name: this.config.name,
-                    messageID: info.messageID,
-                    author: event.senderID,
-                    type: "-l"
-                });
-            }, event.messageID);
-        }
-        case "-p": {
-            return api.sendMessage(
-                "Comming soon..."
-            , event.threadID, (error, info) => {
-                global.client.handleReply.push({
-                    name: this.config.name,
-                    messageID: info.messageID,
-                    author: event.senderID,
-                    type: "-p"
-                });
-            }, event.messageID);
-        }
-            default:
-            return utils.throwError("petmonsters", event.threadID, event.messageID); break;
-        }
-    }
-};
-/*====================== REPLY =========================*/
-module.exports.handleReply = async function({ api, event, handleReply, client }) {
-  switch(handleReply.type) {
-    case "-s":
-      switch(event.body) {
-        case "1":
-        return api.sendMessage(
-                "===[FOOD]===\n1.Fish(100$)\nDrop <3 to buy!!!\n2.Country(100$)\nDrop 👍 to buy!!!\n3.Fruit(100$)\nDrop 😢 to buy!!!"
-            , event.threadID, (error, info) => {
-                global.client.handleReply.push({
-                    name: this.config.name,
-                    messageID: info.messageID,
-                    author: event.senderID,
-                    type: "FOOD"
-                });
-            }, event.messageID);
-        case "2":
-          return api.sendMessage(
-                "===[WEAPONS]===\n1.Sword\n2.Guns\n3.Shield"
-            , event.threadID, (error, info) => {
-                global.client.handleReply.push({
-                    name: this.config.name,
-                    messageID: info.messageID,
-                    author: event.senderID,
-                    type: "WEAPONS"
-                });
-            }, event.messageID);
-          case "3":
-          return api.sendMessage(
-                "===[Armor]===\n1.Leather armor\n2.Comming soon..."
-            , event.threadID, (error, info) => {
-                global.client.handleReply.push({
-                    name: this.config.name,
-                    messageID: info.messageID,
-                    author: event.senderID,
-                    type: "ARMOR"
-                });
-            }, event.messageID);
-          case "4":
-          return api.sendMessage("Comming soon...",  event.threadID, (error, info) => {
-                global.client.handleReply.push({
-                    name: this.config.name,
-                    messageID: info.messageID,
-                    author: event.senderID,
-                    type: "PET"
-                });
-            }, event.messageID);
-                  }
-      case "-l":
-      switch(event.body) {
-        case "1":
-        return api.sendMessage("Name: Three top dog\nGeneration: Fire\nBlood: 120\nAttack: 120\nSpecial skill: Breathe out fire", event.threadID); break;
-        case "2":
-          return api.sendMessage("Name: Three-Tailed Crocodile\nGeneration: Water\nBlood: 120\nAttack: 120\nSpecial skill: Spit out water", event.threadID); break;
-          case "3":
-          return api.sendMessage("Name: Bear Dog\nGeneration: Soil\nBlood: 120\nAttack: 120\nSpecial Skill: Earthquake", event.threadID); break;
-          case "4":
-          return api.sendMessage("Name: Giant Snake\nGeneration: Grass\nBlood: 120\nAttack: 120\nSpecial skill: Tied up the victim", event.threadID); break;
-          case "5":
-          return api.sendMessage("Name: Three Headed Dragon\nGeneration: Light\nBlood: 120\nAttack: 120\nSpecial Skill: Show off something white and white", event.threadID); break;
-          case "6":
-          return api.sendMessage("Name: Devil\nType: Darkness\nBlood: 120\nAttack: 120\nSpecial skill: Darkness covers, blind the opponent's eyes", event.threadID); break;
-      }
-  }
+module.exports.config = {  
+    name: "كف",  
+    version: "2.0.0",  
+    hasPermssion: 0,  
+    credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭 | تعديل محمد",  
+    description: "كف بالرد او التاغ",  
+    commandCategory: "general",  
+    usages: "[tag/reply]",  
+    cooldowns: 5,  
+    dependencies: {  
+        "axios": "",  
+        "fs-extra": "",  
+        "path": "",  
+        "jimp": ""  
+    }  
+};  
+
+module.exports.onLoad = async() => {  
+    const { resolve } = global.nodemodule["path"];  
+    const { existsSync, mkdirSync } = global.nodemodule["fs-extra"];  
+    const dirMaterial = __dirname + `/cache/canvas/`;  
+    if (!existsSync(dirMaterial)) mkdirSync(dirMaterial, { recursive: true });  
+}  
+
+async function makeImage({ one, two }) {  
+    const fs = global.nodemodule["fs-extra"];  
+    const path = global.nodemodule["path"];  
+    const axios = global.nodemodule["axios"];   
+    const jimp = global.nodemodule["jimp"];  
+    const __root = path.resolve(__dirname, "cache", "canvas");  
+
+    let tromcho_img = await jimp.read(__root + "/batmanslap.jpg");  
+    let pathImg = __root + `/tromcho_${one}_${two}.png`;  
+    let avatarOne = __root + `/avt_${one}.png`;  
+    let avatarTwo = __root + `/avt_${two}.png`;  
+
+    let getAvatarOne = (await axios.get(`https://graph.facebook.com/${one}/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`, { responseType: 'arraybuffer' })).data;  
+    fs.writeFileSync(avatarOne, Buffer.from(getAvatarOne, 'utf-8'));  
+
+    let getAvatarTwo = (await axios.get(`https://graph.facebook.com/${two}/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`, { responseType: 'arraybuffer' })).data;  
+    fs.writeFileSync(avatarTwo, Buffer.from(getAvatarTwo, 'utf-8'));  
+
+    let circleOne = await jimp.read(await circle(avatarOne));  
+    let circleTwo = await jimp.read(await circle(avatarTwo));  
+    tromcho_img.composite(circleOne.resize(160, 180), 370, 70).composite(circleTwo.resize(230, 250), 140, 150);  
+
+    let raw = await tromcho_img.getBufferAsync("image/png");  
+    fs.writeFileSync(pathImg, raw);  
+    fs.unlinkSync(avatarOne);  
+    fs.unlinkSync(avatarTwo);  
+
+    return pathImg;  
+}  
+
+async function circle(image) {  
+    const jimp = require("jimp");  
+    image = await jimp.read(image);  
+    image.circle();  
+    return await image.getBufferAsync("image/png");  
+}  
+
+module.exports.run = async function ({ event, api }) {  
+    const fs = global.nodemodule["fs-extra"];  
+    const { threadID, messageID, senderID } = event;  
+    var mention = Object.keys(event.mentions)[0];  
+    var userID;  
+    var tag;  
+
+    // لو فيه تاغ  
+    if (mention) {  
+        userID = mention;  
+        tag = event.mentions[mention].replace("@", "");  
+    }  
+    // لو فيه رد  
+    else if (event.type == "message_reply") {  
+        userID = event.messageReply.senderID;  
+        tag = "الرد";  
+    }  
+    else return api.sendMessage("سويله تاغ او رد على رسالته", threadID, messageID);  
+
+    var one = senderID, two = userID;  
+    return makeImage({ one, two }).then(path => api.sendMessage({  
+        body: "كف محترم! " + tag ,  
+        mentions: [{ tag: tag, id: userID }],  
+        attachment: fs.createReadStream(path)  
+    }, threadID, () => fs.unlinkSync(path), messageID));  
 }
